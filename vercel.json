@@ -1,0 +1,11 @@
+cd ~/Desktop/eniacai-welcome
+
+# Создайте папку api
+mkdir api
+
+# Создайте файлы (используйте VS Code для этого)
+touch api/login.js
+touch dashboard.html
+touch estimates.html
+touch technician.html
+touch vercel.json

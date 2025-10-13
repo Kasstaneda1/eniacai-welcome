@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #e8f4f8 0%, #d4e7f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(100, 150, 180, 0.15);
+            border-top: 4px solid #6ba3d0;
+        }
+
+        h1 {
+            color: #4a7fa0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #6ba3d0;
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e8f0f5;
+            color: #5a6c7d;
+        }
+
+        tr:hover {
+            background: #f5f9fb;
+        }
+
+        .logout-btn {
+            margin-top: 30px;
+            background: #e8f0f5;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            color: #6b8a9f;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d4e7f0;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Estimates</h1>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Менеджер</th>
+                        <th>Ресурс</th>
+                        <th>Техник</th>
+                        <th>Клиент</th>
+                        <th>Работа</th>
+                        <th>Запчасти</th>
+                        <th>2 Техник</th>
+                        <th>Total</th>
+                        <th>Part Number</th>
+                        <th>События</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody id="estimatesTable">
+                    <tr>
+                        <td colspan="12" style="text-align: center; padding: 40px; color: #a0b5c5;">
+                            No estimates yet. Data will appear here when added.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <center>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </center>
+    </div>
+
+    <script>
+        if (!sessionStorage.getItem('authToken')) {
+            window.location.href = '/';
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = '/';
+        }
+
+        // Пример данных (потом будет из базы данных)
+        const sampleData = [
+            {
+                date: '2025-10-13',
+                manager: 'John Smith',
+                resource: 'Unit A',
+                technician: 'Mike Johnson',
+                client: 'ABC Corp',
+                work: 'HVAC Repair',
+                parts: '$250',
+                tech2: 'N/A',
+                total: '$850',
+                partNumber: 'PN-12345',
+                events: 'Initial inspection',
+                status: 'pending'
+            }
+        ];
+
+        // Можно раскомментировать для отображения примера
+        // displayEstimates(sampleData);
+
+        function displayEstimates(data) {
+            const tbody = document.getElementById('estimatesTable');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = `
+                    <tr>
+                        <td>${item.date}</td>
+                        <td>${item.manager}</td>
+                        <td>${item.resource}</td>
+                        <td>${item.technician}</td>
+                        <td>${item.client}</td>
+                        <td>${item.work}</td>
+                        <td>${item.parts}</td>
+                        <td>${item.tech2}</td>
+                        <td><strong>${item.total}</strong></td>
+                        <td>${item.partNumber}</td>
+                        <td>${item.events}</td>
+                        <td><span class="status-badge status-${item.status}">${item.status}</span></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>

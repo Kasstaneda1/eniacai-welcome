@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #e8f4f8 0%, #d4e7f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 60px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(100, 150, 180, 0.15);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            border-top: 4px solid #6ba3d0;
+        }
+
+        .icon {
+            font-size: 5em;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #4a7fa0;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        p {
+            color: #6b8a9f;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .dev-badge {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px 20px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .logout-btn {
+            background: #e8f0f5;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            color: #6b8a9f;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d4e7f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🔧</div>
+        <h1>Welcome, Technicians!</h1>
+        <div class="dev-badge">🚧 IN DEVELOPMENT</div>
+        <p>This page is currently under development. Please check back soon for updates!</p>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        if (!sessionStorage.getItem('authToken')) {
+            window.location.href = '/';
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

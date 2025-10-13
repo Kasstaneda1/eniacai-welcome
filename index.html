@@ -90,7 +90,6 @@
             font-size: 0.85em;
         }
 
-        /* Модальное окно */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -195,7 +194,11 @@
             box-shadow: 0 5px 15px rgba(107, 163, 208, 0.4);
         }
 
-        /* Уведомление */
+        .submit-btn:disabled {
+            background: #a0b5c5;
+            cursor: not-allowed;
+        }
+
         .notification {
             position: fixed;
             top: -100px;
@@ -256,7 +259,7 @@
             </div>
             <div class="modal-buttons">
                 <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
-                <button class="modal-btn submit-btn" onclick="handleLogin()">Login</button>
+                <button class="modal-btn submit-btn" id="loginBtn" onclick="handleLogin()">Login</button>
             </div>
         </div>
     </div>
@@ -287,20 +290,46 @@
             }, 3000);
         }
 
-        function handleLogin() {
+        async function handleLogin() {
             const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
             
-            if (!password || password !== 'correct_password') {
+            if (!password) {
                 showNotification();
                 return;
             }
-            
-            // Здесь будет логика при правильном пароле
-            closeModal();
-            alert('Login successful! (This will be replaced with actual logic)');
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Checking...';
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ password: password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    sessionStorage.setItem('authToken', data.token);
+                    sessionStorage.setItem('userRole', data.role);
+                    window.location.href = data.redirect;
+                } else {
+                    showNotification();
+                    document.getElementById('password').value = '';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification();
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Login';
+            }
         }
 
-        // Enter key support
         document.getElementById('password').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 handleLogin();
