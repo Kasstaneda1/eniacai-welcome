@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #f5f7fa 0%, #e8ecf1 100%);
+            background: linear-gradient(180deg, #e8f4f8 0%, #d4e7f0 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,30 +24,30 @@
         .container {
             background: white;
             padding: 50px 60px;
-            border-radius: 4px;
-            box-shadow: 0 2px 12px rgba(0, 51, 153, 0.15);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(100, 150, 180, 0.15);
             text-align: center;
             max-width: 550px;
             width: 100%;
-            border-top: 4px solid #003399;
+            border-top: 4px solid #6ba3d0;
         }
 
         .logo {
             width: 80px;
             height: 80px;
             margin: 0 auto 25px;
-            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            background: linear-gradient(135deg, #6ba3d0 0%, #8bc5e8 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5em;
             color: white;
-            box-shadow: 0 4px 8px rgba(0, 51, 153, 0.2);
+            box-shadow: 0 4px 12px rgba(107, 163, 208, 0.3);
         }
 
         h1 {
-            color: #003399;
+            color: #4a7fa0;
             font-size: 1.8em;
             margin-bottom: 15px;
             font-weight: 600;
@@ -55,44 +55,165 @@
         }
 
         p {
-            color: #5a6c7d;
+            color: #6b8a9f;
             font-size: 1.05em;
             margin-bottom: 35px;
             line-height: 1.6;
         }
 
         .login-btn {
-            background: #003399;
+            background: #6ba3d0;
             color: white;
             border: none;
             padding: 14px 45px;
             font-size: 1em;
             font-weight: 600;
-            border-radius: 3px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0, 51, 153, 0.3);
+            box-shadow: 0 3px 10px rgba(107, 163, 208, 0.3);
         }
 
         .login-btn:hover {
-            background: #0055cc;
-            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.4);
-            transform: translateY(-1px);
-        }
-
-        .login-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 6px rgba(0, 51, 153, 0.3);
+            background: #5a92bf;
+            box-shadow: 0 5px 15px rgba(107, 163, 208, 0.4);
+            transform: translateY(-2px);
         }
 
         .footer {
             margin-top: 30px;
             padding-top: 25px;
-            border-top: 1px solid #e8ecf1;
-            color: #a0aab5;
+            border-top: 1px solid #e8f0f5;
+            color: #a0b5c5;
             font-size: 0.85em;
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(75, 110, 135, 0.4);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(107, 163, 208, 0.3);
+            min-width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal h2 {
+            color: #4a7fa0;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #6b8a9f;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #d4e7f0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #6ba3d0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn {
+            background: #e8f0f5;
+            color: #6b8a9f;
+        }
+
+        .cancel-btn:hover {
+            background: #d4e7f0;
+        }
+
+        .submit-btn {
+            background: #6ba3d0;
+            color: white;
+            box-shadow: 0 3px 10px rgba(107, 163, 208, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: #5a92bf;
+            box-shadow: 0 5px 15px rgba(107, 163, 208, 0.4);
+        }
+
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 18px 30px;
+            border-radius: 8px;
+            box-shadow: 0 6px 25px rgba(107, 163, 208, 0.35);
+            border-left: 4px solid #f0a8a8;
+            color: #d07070;
+            font-weight: 500;
+            z-index: 2000;
+            transition: top 0.5s ease;
+        }
+
+        .notification.show {
+            top: 30px;
         }
 
         @media (max-width: 600px) {
@@ -103,27 +224,88 @@
             h1 {
                 font-size: 1.5em;
             }
+
+            .modal {
+                min-width: 90%;
+                padding: 30px 25px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="notification" id="notification">
+        Please enter correct credentials
+    </div>
+
     <div class="container">
         <div class="logo">🏢</div>
         <h1>Welcome to Our Company</h1>
         <p>Enjoy using our services!</p>
-        <button class="login-btn" onclick="handleLogin()">Login</button>
+        <button class="login-btn" onclick="openModal()">Login</button>
         <div class="footer">
             ENIAC AI © 2025
         </div>
     </div>
 
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn submit-btn" onclick="handleLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function handleLogin() {
-            // Здесь будет логика входа
-            alert('Login functionality will be implemented soon!');
-            // Позже можно будет перенаправить на страницу входа:
-            // window.location.href = '/login';
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('password').value = '';
+            document.getElementById('password').focus();
         }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function handleLogin() {
+            const password = document.getElementById('password').value;
+            
+            if (!password || password !== 'correct_password') {
+                showNotification();
+                return;
+            }
+            
+            // Здесь будет логика при правильном пароле
+            closeModal();
+            alert('Login successful! (This will be replaced with actual logic)');
+        }
+
+        // Enter key support
+        document.getElementById('password').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleLogin();
+            }
+        });
     </script>
 </body>
 </html>
