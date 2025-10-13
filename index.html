@@ -12,8 +12,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #f5f7fa 0%, #e8ecf1 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,50 +22,108 @@
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: white;
+            padding: 50px 60px;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0, 51, 153, 0.15);
             text-align: center;
-            max-width: 600px;
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            line-height: 1.3;
-        }
-
-        p {
-            color: #666;
-            font-size: 1.2em;
-            margin-top: 15px;
+            max-width: 550px;
+            width: 100%;
+            border-top: 4px solid #003399;
         }
 
         .logo {
-            font-size: 4em;
-            margin-bottom: 20px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 51, 153, 0.2);
+        }
+
+        h1 {
+            color: #003399;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: #5a6c7d;
+            font-size: 1.05em;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .login-btn {
+            background: #003399;
+            color: white;
+            border: none;
+            padding: 14px 45px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(0, 51, 153, 0.3);
+        }
+
+        .login-btn:hover {
+            background: #0055cc;
+            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 51, 153, 0.3);
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e8ecf1;
+            color: #a0aab5;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">🚀</div>
+        <div class="logo">🏢</div>
         <h1>Welcome to Our Company</h1>
         <p>Enjoy using our services!</p>
+        <button class="login-btn" onclick="handleLogin()">Login</button>
+        <div class="footer">
+            ENIAC AI © 2025
+        </div>
     </div>
+
+    <script>
+        function handleLogin() {
+            // Здесь будет логика входа
+            alert('Login functionality will be implemented soon!');
+            // Позже можно будет перенаправить на страницу входа:
+            // window.location.href = '/login';
+        }
+    </script>
 </body>
 </html>
