@@ -354,6 +354,14 @@
             box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.15);
         }
 
+        .comment-section-with-save {
+            display: block;
+        }
+
+        .comment-section-with-save.hidden {
+            display: none;
+        }
+
         .save-comment-section {
             margin-top: 15px;
             padding-top: 15px;
@@ -438,7 +446,7 @@
 
         .view-modal-content {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr 280px;
             gap: 30px;
             margin-top: 25px;
         }
@@ -501,6 +509,7 @@
             resize: vertical;
             min-height: 80px;
             margin-bottom: 10px;
+            background: #fefcf8;
         }
 
         .add-comment-btn {
@@ -539,10 +548,12 @@
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
+            border: 2px solid transparent;
         }
 
         .status-option:hover {
             background: #fef9ed;
+            border-color: #f4c542;
         }
 
         .status-option input[type="checkbox"] {
@@ -555,6 +566,7 @@
             cursor: pointer;
             color: #5d4e37;
             font-weight: 500;
+            flex: 1;
         }
 
         @media (max-width: 968px) {
@@ -631,12 +643,6 @@
                     <span>Warehouse</span>
                 </div>
             </div>
-            <div class="menu-item">
-                <div class="menu-item-header">
-                    <span class="menu-icon">💰</span>
-                    <span>Finance</span>
-                </div>
-            </div>
         </div>
 
         <div class="sidebar-footer">
@@ -682,7 +688,7 @@
     </div>
 
     <!-- Add/Edit Modal -->
-    <div class="modal-overlay" id="addModal">
+    <div class="modal-overlay" id="formModal">
         <div class="modal">
             <h2 id="modalTitle">Add New Estimate</h2>
             <form id="estimateForm">
@@ -729,18 +735,18 @@
                         <input type="text" id="client" placeholder="Enter client name" required>
                     </div>
 
-                    <div class="form-group full-width">
+                    <div class="form-group full-width comment-section-with-save" id="commentSection">
                         <label for="comment">Comment</label>
                         <textarea id="comment" placeholder="Enter comment (optional)"></textarea>
                         <div class="save-comment-section">
-                            <button type="button" class="save-comment-btn" onclick="saveComment()">Save Comment</button>
+                            <button type="button" class="save-comment-btn" onclick="saveInitialComment()">Save Comment</button>
                             <span class="comment-saved-msg" id="commentSavedMsg">✓ Comment saved</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn cancel-btn" onclick="closeAddModal()">Cancel</button>
+                    <button type="button" class="modal-btn cancel-btn" onclick="closeFormModal()">Cancel</button>
                     <button type="submit" class="modal-btn save-btn">Save</button>
                 </div>
             </form>
@@ -766,19 +772,19 @@
                     <h3>Status</h3>
                     <div class="status-options">
                         <div class="status-option">
-                            <input type="checkbox" id="statusNoAnswer" value="no_answer" onchange="updateStatus(this)">
+                            <input type="checkbox" id="statusNoAnswer" value="no_answer">
                             <label for="statusNoAnswer">No Answer</label>
                         </div>
                         <div class="status-option">
-                            <input type="checkbox" id="statusThinking" value="thinking" onchange="updateStatus(this)">
+                            <input type="checkbox" id="statusThinking" value="thinking">
                             <label for="statusThinking">Thinking</label>
                         </div>
                         <div class="status-option">
-                            <input type="checkbox" id="statusSold" value="sold" onchange="updateStatus(this)">
+                            <input type="checkbox" id="statusSold" value="sold">
                             <label for="statusSold">Sold</label>
                         </div>
                         <div class="status-option">
-                            <input type="checkbox" id="statusRejected" value="rejected" onchange="updateStatus(this)">
+                            <input type="checkbox" id="statusRejected" value="rejected">
                             <label for="statusRejected">Rejected</label>
                         </div>
                     </div>
@@ -822,13 +828,17 @@
 
         function openAddModal() {
             editingEstimateId = null;
-            const modal = document.getElementById('addModal');
+            const modal = document.getElementById('formModal');
             const modalTitle = document.getElementById('modalTitle');
-            const dateInput = document.getElementById('date');
+            const commentSection = document.getElementById('commentSection');
             const form = document.getElementById('estimateForm');
             
             if (modalTitle) {
                 modalTitle.textContent = 'Add New Estimate';
+            }
+            
+            if (commentSection) {
+                commentSection.classList.remove('hidden');
             }
             
             if (form) {
@@ -839,20 +849,22 @@
                 modal.classList.add('active');
             }
             
-            if (dateInput) {
-                dateInput.valueAsDate = new Date();
-            }
-
+            document.getElementById('date').valueAsDate = new Date();
             document.getElementById('commentSavedMsg').classList.remove('show');
         }
 
         function openEditModal(estimate) {
             editingEstimateId = estimate.id;
-            const modal = document.getElementById('addModal');
+            const modal = document.getElementById('formModal');
             const modalTitle = document.getElementById('modalTitle');
+            const commentSection = document.getElementById('commentSection');
             
             if (modalTitle) {
                 modalTitle.textContent = 'Edit Estimate';
+            }
+            
+            if (commentSection) {
+                commentSection.classList.add('hidden');
             }
             
             document.getElementById('date').value = estimate.date;
@@ -860,30 +872,32 @@
             document.getElementById('resource').value = estimate.resource;
             document.getElementById('technician').value = estimate.technician;
             document.getElementById('client').value = estimate.client;
-            document.getElementById('comment').value = estimate.comment || '';
             
             if (modal) {
                 modal.classList.add('active');
             }
-
-            document.getElementById('commentSavedMsg').classList.remove('show');
         }
 
-        function closeAddModal() {
+        function closeFormModal() {
             editingEstimateId = null;
-            const modal = document.getElementById('addModal');
+            const modal = document.getElementById('formModal');
             const form = document.getElementById('estimateForm');
+            const commentSection = document.getElementById('commentSection');
+            
             if (modal) {
                 modal.classList.remove('active');
             }
             if (form) {
                 form.reset();
             }
+            if (commentSection) {
+                commentSection.classList.remove('hidden');
+            }
         }
 
-        async function saveComment() {
+        async function saveInitialComment() {
             if (!editingEstimateId) {
-                alert('Please save the estimate first');
+                alert('Please save the estimate first before adding comments');
                 return;
             }
 
@@ -908,6 +922,7 @@
                 const data = await response.json();
 
                 if (data.success) {
+                    document.getElementById('comment').value = '';
                     const msg = document.getElementById('commentSavedMsg');
                     msg.classList.add('show');
                     setTimeout(() => {
@@ -931,7 +946,10 @@
             }
 
             await loadComments(estimate.id);
-            loadCurrentStatus(estimate.status);
+            
+            document.querySelectorAll('.status-option input').forEach(cb => {
+                cb.checked = false;
+            });
         }
 
         function closeViewModal() {
@@ -1000,44 +1018,6 @@
             }
         }
 
-        function loadCurrentStatus(status) {
-            document.querySelectorAll('.status-option input').forEach(cb => {
-                cb.checked = (cb.value === status);
-            });
-        }
-
-        async function updateStatus(checkbox) {
-            document.querySelectorAll('.status-option input').forEach(cb => {
-                if (cb !== checkbox) cb.checked = false;
-            });
-
-            const newStatus = checkbox.checked ? checkbox.value : 'pending';
-
-            try {
-                const response = await fetch('/api/estimates/update-status', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id: currentViewEstimateId,
-                        status: newStatus
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    loadEstimates();
-                } else {
-                    alert('Error updating status');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error updating status');
-            }
-        }
-
         function formatDate(dateString) {
             const date = new Date(dateString);
             const day = date.getDate();
@@ -1050,7 +1030,6 @@
             const tbody = document.getElementById('estimatesTable');
             
             if (!tbody) {
-                console.error('Table body not found');
                 return;
             }
             
@@ -1087,13 +1066,6 @@
                 `).join('');
             } catch (error) {
                 console.error('Error loading estimates:', error);
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="12" style="text-align: center; padding: 50px; color: #c62828;">
-                            Error loading data. Please refresh the page.
-                        </td>
-                    </tr>
-                `;
             }
         }
 
@@ -1137,7 +1109,7 @@
                     if (!editingEstimateId) {
                         editingEstimateId = data.data.id;
                     }
-                    closeAddModal();
+                    closeFormModal();
                     loadEstimates();
                 } else {
                     alert('Error: ' + (data.error || 'Failed to save estimate'));
