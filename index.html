@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENIAC AI - Enterprise Portal</title>
+    <title>ENIAC AI - Enterprise System</title>
     <style>
         * {
             margin: 0;
@@ -13,16 +13,17 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
+            background: linear-gradient(180deg, #f5f0e8 0%, #e8dfc8 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
         .header {
-            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
-            padding: 20px 40px;
-            box-shadow: 0 2px 8px rgba(0, 51, 153, 0.2);
+            background: linear-gradient(180deg, #fef5e7 0%, #f8ead3 100%);
+            padding: 12px 30px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid #e8d5b7;
         }
 
         .header-content {
@@ -30,26 +31,27 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .logo {
-            width: 45px;
-            height: 45px;
-            background: white;
+        .logo-1c {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+            color: white;
+            font-size: 1.2em;
+            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.4);
         }
 
-        .company-name {
-            color: white;
-            font-size: 1.5em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        .system-title {
+            color: #5d4e37;
+            font-size: 0.95em;
+            font-weight: 400;
         }
 
         .main-content {
@@ -63,11 +65,11 @@
         .login-container {
             background: white;
             padding: 50px 60px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            max-width: 480px;
+            border-radius: 6px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+            max-width: 500px;
             width: 100%;
-            border-top: 4px solid #003399;
+            border-top: 3px solid #f4c542;
         }
 
         .login-header {
@@ -76,50 +78,50 @@
         }
 
         .login-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2em;
+            font-size: 2.2em;
             color: white;
-            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.25);
+            box-shadow: 0 4px 12px rgba(244, 197, 66, 0.35);
         }
 
         .login-header h1 {
-            color: #003399;
-            font-size: 1.8em;
-            margin-bottom: 10px;
+            color: #5d4e37;
+            font-size: 1.9em;
+            margin-bottom: 12px;
             font-weight: 600;
         }
 
         .login-header p {
-            color: #6b7280;
-            font-size: 0.95em;
+            color: #8b7d6b;
+            font-size: 1em;
         }
 
         .login-btn {
             width: 100%;
-            background: #003399;
-            color: white;
+            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
             border: none;
             padding: 16px;
             font-size: 1.05em;
-            font-weight: 600;
-            border-radius: 6px;
+            font-weight: 700;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.3);
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(244, 197, 66, 0.4);
         }
 
         .login-btn:hover {
-            background: #0055cc;
-            box-shadow: 0 6px 16px rgba(0, 51, 153, 0.4);
+            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            box-shadow: 0 5px 15px rgba(244, 197, 66, 0.5);
             transform: translateY(-2px);
         }
 
@@ -128,12 +130,12 @@
         }
 
         .footer {
-            background: #f9fafb;
-            padding: 20px;
+            background: #fef5e7;
+            padding: 18px;
             text-align: center;
-            color: #9ca3af;
-            font-size: 0.9em;
-            border-top: 1px solid #e5e7eb;
+            color: #8b7d6b;
+            font-size: 0.85em;
+            border-top: 1px solid #e8d5b7;
         }
 
         /* Modal */
@@ -144,8 +146,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(93, 78, 55, 0.6);
+            backdrop-filter: blur(3px);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -161,12 +163,12 @@
         .modal {
             background: white;
             padding: 45px;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            min-width: 450px;
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            min-width: 460px;
             transform: scale(0.95);
             transition: transform 0.3s ease;
-            border-top: 4px solid #003399;
+            border-top: 3px solid #f4c542;
         }
 
         .modal-overlay.active .modal {
@@ -178,24 +180,24 @@
         }
 
         .modal h2 {
-            color: #003399;
-            font-size: 1.6em;
+            color: #5d4e37;
+            font-size: 1.7em;
             margin-bottom: 8px;
             font-weight: 600;
         }
 
         .modal-subtitle {
-            color: #6b7280;
+            color: #8b7d6b;
             font-size: 0.9em;
         }
 
         .input-group {
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
         .input-group label {
             display: block;
-            color: #374151;
+            color: #5d4e37;
             margin-bottom: 10px;
             font-weight: 600;
             font-size: 0.95em;
@@ -204,18 +206,18 @@
         .input-group input {
             width: 100%;
             padding: 14px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 6px;
+            border: 2px solid #e8d5b7;
+            border-radius: 4px;
             font-size: 1em;
             transition: all 0.3s ease;
-            background: #f9fafb;
+            background: #fefcf8;
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: #003399;
+            border-color: #f4c542;
             background: white;
-            box-shadow: 0 0 0 3px rgba(0, 51, 153, 0.1);
+            box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.15);
         }
 
         .modal-buttons {
@@ -228,7 +230,7 @@
             flex: 1;
             padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             font-size: 1em;
             font-weight: 600;
             cursor: pointer;
@@ -238,29 +240,31 @@
         }
 
         .cancel-btn {
-            background: #f3f4f6;
-            color: #6b7280;
-            border: 2px solid #e5e7eb;
+            background: #f5f0e8;
+            color: #8b7d6b;
+            border: 2px solid #e8d5b7;
         }
 
         .cancel-btn:hover {
-            background: #e5e7eb;
-            color: #374151;
+            background: #e8dfc8;
+            color: #5d4e37;
         }
 
         .submit-btn {
-            background: #003399;
-            color: white;
-            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.3);
+            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
+            box-shadow: 0 3px 10px rgba(244, 197, 66, 0.4);
+            font-weight: 700;
         }
 
         .submit-btn:hover {
-            background: #0055cc;
-            box-shadow: 0 6px 16px rgba(0, 51, 153, 0.4);
+            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            box-shadow: 0 5px 15px rgba(244, 197, 66, 0.5);
         }
 
         .submit-btn:disabled {
-            background: #9ca3af;
+            background: #d4c5b0;
+            color: #8b7d6b;
             cursor: not-allowed;
             box-shadow: none;
         }
@@ -273,10 +277,10 @@
             transform: translateX(-50%);
             background: white;
             padding: 18px 30px;
-            border-radius: 8px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #ef4444;
-            color: #dc2626;
+            border-radius: 6px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #e63946;
+            color: #c1121f;
             font-weight: 600;
             z-index: 2000;
             transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -305,7 +309,7 @@
             }
 
             .header {
-                padding: 15px 20px;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -313,8 +317,8 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo">🏢</div>
-            <div class="company-name">ENIAC AI</div>
+            <div class="logo-1c">1C</div>
+            <div class="system-title">ENIAC AI Enterprise Management System</div>
         </div>
     </div>
 
@@ -326,26 +330,26 @@
         <div class="login-container">
             <div class="login-header">
                 <div class="login-icon">🔐</div>
-                <h1>Enterprise Portal</h1>
-                <p>Access your workspace securely</p>
+                <h1>Authorization</h1>
+                <p>Enterprise Portal Access</p>
             </div>
             <button class="login-btn" onclick="openModal()">Sign In</button>
         </div>
     </div>
 
     <div class="footer">
-        © 2025 ENIAC AI Corporation. All rights reserved.
+        © 2025 ENIAC AI Corporation. Enterprise Management System
     </div>
 
     <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
         <div class="modal">
             <div class="modal-header">
-                <h2>Authentication</h2>
-                <p class="modal-subtitle">Enter your password to continue</p>
+                <h2>User Authentication</h2>
+                <p class="modal-subtitle">Enter your password to access the system</p>
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+                <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
             </div>
             <div class="modal-buttons">
                 <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
@@ -390,7 +394,7 @@
             }
 
             loginBtn.disabled = true;
-            loginBtn.textContent = 'Authenticating...';
+            loginBtn.textContent = 'Checking...';
 
             try {
                 const response = await fetch('/api/login', {

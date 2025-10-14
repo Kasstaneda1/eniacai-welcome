@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,131 +13,155 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
+            background: linear-gradient(180deg, #f5f0e8 0%, #e8dfc8 100%);
             min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #fef5e7 0%, #f8ead3 100%);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+            border-right: 1px solid #e8d5b7;
             display: flex;
             flex-direction: column;
         }
 
-        .header {
-            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
-            padding: 20px 40px;
-            box-shadow: 0 2px 8px rgba(0, 51, 153, 0.2);
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #e8d5b7;
         }
 
-        .header-content {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-left {
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .logo {
+        .logo-1c {
             width: 45px;
-            height: 45px;
-            background: white;
-            border-radius: 6px;
+            height: 38px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .company-name {
+            font-weight: bold;
             color: white;
-            font-size: 1.5em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-size: 1.1em;
+            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.4);
         }
 
-        .user-section {
+        .system-name {
+            font-size: 0.85em;
+            color: #5d4e37;
+            line-height: 1.3;
+        }
+
+        .menu {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 14px 25px;
+            color: #5d4e37;
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            gap: 12px;
+            font-size: 0.95em;
+            border-left: 3px solid transparent;
             text-decoration: none;
-            display: inline-block;
         }
 
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
+        .menu-item:hover {
+            background: rgba(244, 197, 66, 0.15);
+            border-left-color: #f4c542;
+        }
+
+        .menu-item.active {
+            background: rgba(244, 197, 66, 0.25);
+            border-left-color: #f4c542;
+            font-weight: 600;
+        }
+
+        .menu-icon {
+            font-size: 1.2em;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #e8d5b7;
         }
 
         .logout-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 24px;
-            border-radius: 6px;
+            width: 100%;
+            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.9em;
             text-transform: uppercase;
+            font-size: 0.85em;
             letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
         }
 
         .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
         }
 
-        .main-content {
+        .main-container {
             flex: 1;
-            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .page-header {
+        .top-bar {
             background: white;
-            padding: 35px 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-            border-left: 4px solid #003399;
+            padding: 15px 30px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            border-bottom: 1px solid #e8d5b7;
         }
 
-        .page-header h1 {
-            color: #003399;
-            font-size: 2em;
-            margin-bottom: 8px;
+        .breadcrumb {
+            color: #8b7d6b;
+            font-size: 0.9em;
+        }
+
+        .breadcrumb a {
+            color: #5d4e37;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            color: #2d8659;
+            font-size: 1.8em;
+            margin-bottom: 25px;
             font-weight: 600;
-        }
-
-        .page-header p {
-            color: #6b7280;
-            font-size: 1em;
         }
 
         .table-container {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 6px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -152,27 +175,32 @@
         }
 
         thead {
-            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
         }
 
         th {
-            color: white;
-            padding: 18px 16px;
+            color: #5d4e37;
+            padding: 16px 14px;
             text-align: left;
-            font-weight: 600;
-            text-transform: uppercase;
+            font-weight: 700;
             font-size: 0.85em;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
+            border-right: 1px solid rgba(93, 78, 55, 0.1);
+        }
+
+        th:last-child {
+            border-right: none;
         }
 
         tbody tr {
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #f0ebe0;
             transition: background 0.2s ease;
         }
 
         tbody tr:hover {
-            background: #f9fafb;
+            background: #fefcf8;
         }
 
         tbody tr:last-child {
@@ -180,14 +208,14 @@
         }
 
         td {
-            padding: 16px;
-            color: #374151;
-            font-size: 0.95em;
+            padding: 14px;
+            color: #5d4e37;
+            font-size: 0.9em;
         }
 
         .empty-state {
             text-align: center;
-            padding: 80px 40px;
+            padding: 70px 40px;
         }
 
         .empty-icon {
@@ -197,13 +225,13 @@
         }
 
         .empty-text {
-            color: #9ca3af;
-            font-size: 1.1em;
+            color: #8b7d6b;
+            font-size: 1.05em;
         }
 
         .status-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
+            padding: 5px 12px;
+            border-radius: 4px;
             font-size: 0.8em;
             font-weight: 700;
             text-transform: uppercase;
@@ -212,76 +240,80 @@
         }
 
         .status-pending {
-            background: #fef3c7;
-            color: #92400e;
+            background: #fff4e6;
+            color: #c77700;
+            border: 1px solid #f4c542;
         }
 
         .status-approved {
-            background: #d1fae5;
-            color: #065f46;
+            background: #e8f5e9;
+            color: #2d8659;
+            border: 1px solid #4caf50;
         }
 
         .status-rejected {
-            background: #fee2e2;
-            color: #991b1b;
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
         }
 
-        .status-in-progress {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .footer {
-            background: #f9fafb;
-            padding: 20px;
-            text-align: center;
-            color: #9ca3af;
-            font-size: 0.9em;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-
-            .header-content {
+        @media (max-width: 968px) {
+            body {
                 flex-direction: column;
-                gap: 15px;
             }
 
-            .user-section {
+            .sidebar {
                 width: 100%;
-                justify-content: space-between;
-            }
-
-            th, td {
-                padding: 12px 10px;
-                font-size: 0.85em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="header-left">
-                <div class="logo">🏢</div>
-                <div class="company-name">ENIAC AI</div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-section">
+                <div class="logo-1c">1C</div>
+                <div class="system-name">ENIAC AI<br>Management</div>
             </div>
-            <div class="user-section">
-                <a href="/dashboard.html" class="back-btn">← Back</a>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="menu">
+            <a href="/dashboard.html" class="menu-item">
+                <span class="menu-icon">🏠</span>
+                <span>Main</span>
+            </a>
+            <div class="menu-item active">
+                <span class="menu-icon">📊</span>
+                <span>Estimates</span>
             </div>
+            <div class="menu-item">
+                <span class="menu-icon">💼</span>
+                <span>CRM</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">📦</span>
+                <span>Warehouse</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">💰</span>
+                <span>Finance</span>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="container">
-            <div class="page-header">
-                <h1>Estimates Management</h1>
-                <p>View and manage all project estimates</p>
+    <div class="main-container">
+        <div class="top-bar">
+            <div class="breadcrumb">
+                <a href="/dashboard.html">Main</a> → Estimates
             </div>
+        </div>
+
+        <div class="content">
+            <h1 class="page-title">Estimates Management</h1>
 
             <div class="table-container">
                 <div class="table-wrapper">
@@ -307,7 +339,7 @@
                                 <td colspan="12">
                                     <div class="empty-state">
                                         <div class="empty-icon">📊</div>
-                                        <p class="empty-text">No estimates available. Data will appear here when added.</p>
+                                        <p class="empty-text">No data available. Records will appear here when added.</p>
                                     </div>
                                 </td>
                             </tr>
@@ -318,10 +350,6 @@
         </div>
     </div>
 
-    <div class="footer">
-        © 2025 ENIAC AI Corporation. All rights reserved.
-    </div>
-
     <script>
         if (!sessionStorage.getItem('authToken')) {
             window.location.href = '/';
@@ -330,52 +358,6 @@
         function logout() {
             sessionStorage.clear();
             window.location.href = '/';
-        }
-
-        // Sample data structure (will be connected to backend later)
-        const sampleData = [
-            {
-                date: '2025-10-13',
-                manager: 'John Smith',
-                resource: 'Unit A',
-                technician: 'Mike Johnson',
-                client: 'ABC Corp',
-                work: 'HVAC Repair',
-                parts: '$250',
-                tech2: 'N/A',
-                total: '$850',
-                partNumber: 'PN-12345',
-                events: 'Initial inspection',
-                status: 'pending'
-            }
-        ];
-
-        // Uncomment to show sample data:
-        // displayEstimates(sampleData);
-
-        function displayEstimates(data) {
-            const tbody = document.getElementById('estimatesTable');
-            tbody.innerHTML = '';
-
-            data.forEach(item => {
-                const row = `
-                    <tr>
-                        <td>${item.date}</td>
-                        <td>${item.manager}</td>
-                        <td>${item.resource}</td>
-                        <td>${item.technician}</td>
-                        <td>${item.client}</td>
-                        <td>${item.work}</td>
-                        <td>${item.parts}</td>
-                        <td>${item.tech2}</td>
-                        <td><strong>${item.total}</strong></td>
-                        <td>${item.partNumber}</td>
-                        <td>${item.events}</td>
-                        <td><span class="status-badge status-${item.status}">${item.status}</span></td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
         }
     </script>
 </body>

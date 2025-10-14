@@ -13,16 +13,17 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
+            background: linear-gradient(180deg, #f5f0e8 0%, #e8dfc8 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
         .header {
-            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
-            padding: 20px 40px;
-            box-shadow: 0 2px 8px rgba(0, 51, 153, 0.2);
+            background: linear-gradient(180deg, #fef5e7 0%, #f8ead3 100%);
+            padding: 15px 30px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid #e8d5b7;
         }
 
         .header-content {
@@ -33,48 +34,48 @@
             align-items: center;
         }
 
-        .header-left {
+        .logo-section {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .logo {
-            width: 45px;
-            height: 45px;
-            background: white;
-            border-radius: 6px;
+        .logo-1c {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+            color: white;
+            font-size: 1.2em;
+            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.4);
         }
 
-        .company-name {
-            color: white;
-            font-size: 1.5em;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        .system-name {
+            font-size: 0.95em;
+            color: #5d4e37;
         }
 
         .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
+            border: none;
             padding: 10px 24px;
-            border-radius: 6px;
+            border-radius: 5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.9em;
             text-transform: uppercase;
+            font-size: 0.85em;
             letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
         }
 
         .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
         }
 
         .main-content {
@@ -88,12 +89,12 @@
         .content-box {
             background: white;
             padding: 60px 50px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
             text-align: center;
-            max-width: 650px;
+            max-width: 700px;
             width: 100%;
-            border-top: 4px solid #003399;
+            border-top: 3px solid #f4c542;
         }
 
         .icon-wrapper {
@@ -102,85 +103,71 @@
 
         .main-icon {
             font-size: 5em;
-            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
         }
 
         h1 {
-            color: #003399;
+            color: #5d4e37;
             font-size: 2.2em;
             margin-bottom: 20px;
             font-weight: 600;
         }
 
         .status-badge {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 25px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
+            padding: 12px 30px;
+            border-radius: 5px;
             display: inline-block;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 0.9em;
-            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+            box-shadow: 0 3px 10px rgba(244, 197, 66, 0.4);
         }
 
         .message {
-            color: #6b7280;
+            color: #5d4e37;
             font-size: 1.15em;
             line-height: 1.8;
             margin-bottom: 35px;
         }
 
         .info-box {
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            background: #fefcf8;
+            border: 2px solid #e8d5b7;
+            border-radius: 6px;
             padding: 25px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .info-box p {
-            color: #374151;
+            color: #5d4e37;
             font-size: 0.95em;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .info-box strong {
-            color: #003399;
+            color: #2d8659;
         }
 
         .footer {
-            background: #f9fafb;
-            padding: 20px;
+            background: #fef5e7;
+            padding: 18px;
             text-align: center;
-            color: #9ca3af;
-            font-size: 0.9em;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-
-            .content-box {
-                padding: 40px 30px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
+            color: #8b7d6b;
+            font-size: 0.85em;
+            border-top: 1px solid #e8d5b7;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="header-left">
-                <div class="logo">🏢</div>
-                <div class="company-name">ENIAC AI</div>
+            <div class="logo-section">
+                <div class="logo-1c">1C</div>
+                <div class="system-name">ENIAC AI Enterprise Management System</div>
             </div>
             <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
@@ -192,27 +179,27 @@
                 <div class="main-icon">🔧</div>
             </div>
             
-            <h1>Welcome, Technicians!</h1>
+            <h1>Technician Portal</h1>
             
             <div class="status-badge">
                 🚧 Under Development
             </div>
             
             <p class="message">
-                This portal is currently being developed and will be available soon.
+                This section is currently under development and will be available soon.
             </p>
 
             <div class="info-box">
                 <p>
                     <strong>Coming Soon:</strong><br>
-                    Work orders, task management, inventory tracking, and real-time communication tools.
+                    Task management, work orders, equipment tracking, inventory access, and team communication tools.
                 </p>
             </div>
         </div>
     </div>
 
     <div class="footer">
-        © 2025 ENIAC AI Corporation. All rights reserved.
+        © 2025 ENIAC AI Corporation. Enterprise Management System
     </div>
 
     <script>
