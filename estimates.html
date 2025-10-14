@@ -180,11 +180,6 @@
             font-size: 0.9em;
         }
 
-        .breadcrumb a {
-            color: #5d4e37;
-            text-decoration: none;
-        }
-
         .content {
             flex: 1;
             padding: 30px;
@@ -230,16 +225,16 @@
             border-right: 1px solid rgba(93, 78, 55, 0.1);
         }
 
-       tbody tr {
-    border-bottom: 1px solid #f0ebe0;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
+        tbody tr {
+            border-bottom: 1px solid #f0ebe0;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
 
-tbody tr:hover {
-    background: #fef9ed;
-    box-shadow: inset 0 0 0 1px #f4c542;
-}
+        tbody tr:hover {
+            background: #fef9ed;
+            box-shadow: inset 0 0 0 1px #f4c542;
+        }
 
         td {
             padding: 14px;
@@ -359,6 +354,43 @@ tbody tr:hover {
             box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.15);
         }
 
+        .save-comment-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e8d5b7;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .save-comment-btn {
+            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.3);
+        }
+
+        .save-comment-btn:hover {
+            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+        }
+
+        .comment-saved-msg {
+            color: #2d8659;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: none;
+        }
+
+        .comment-saved-msg.show {
+            display: block;
+        }
+
         .modal-buttons {
             display: flex;
             gap: 12px;
@@ -399,6 +431,132 @@ tbody tr:hover {
             background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
         }
 
+        /* View Modal */
+        .view-modal {
+            max-width: 900px;
+        }
+
+        .view-modal-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .comments-section {
+            border-right: 2px solid #e8d5b7;
+            padding-right: 30px;
+        }
+
+        .comments-section h3 {
+            color: #5d4e37;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .comments-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .comment-item {
+            background: #fefcf8;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #f4c542;
+            margin-bottom: 15px;
+        }
+
+        .comment-text {
+            color: #5d4e37;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .comment-date {
+            color: #8b7d6b;
+            font-size: 0.8em;
+        }
+
+        .no-comments {
+            color: #8b7d6b;
+            font-style: italic;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .add-comment-form {
+            margin-top: 20px;
+        }
+
+        .add-comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e8d5b7;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .add-comment-btn {
+            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
+            color: #5d4e37;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .add-comment-btn:hover {
+            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+        }
+
+        .status-section h3 {
+            color: #5d4e37;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .status-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .status-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #fefcf8;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .status-option:hover {
+            background: #fef9ed;
+        }
+
+        .status-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .status-option label {
+            cursor: pointer;
+            color: #5d4e37;
+            font-weight: 500;
+        }
+
         @media (max-width: 968px) {
             body {
                 flex-direction: column;
@@ -410,6 +568,17 @@ tbody tr:hover {
 
             .form-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .view-modal-content {
+                grid-template-columns: 1fr;
+            }
+
+            .comments-section {
+                border-right: none;
+                border-bottom: 2px solid #e8d5b7;
+                padding-right: 0;
+                padding-bottom: 30px;
             }
         }
     </style>
@@ -424,7 +593,6 @@ tbody tr:hover {
         </div>
 
         <div class="menu">
-
             <div class="menu-item active expanded" id="estimatesMenu">
                 <div class="menu-item-header" onclick="toggleMenu('estimatesMenu')">
                     <span class="menu-icon">📊</span>
@@ -513,9 +681,10 @@ tbody tr:hover {
         </div>
     </div>
 
+    <!-- Add/Edit Modal -->
     <div class="modal-overlay" id="addModal">
         <div class="modal">
-            <h2>Add New Estimate</h2>
+            <h2 id="modalTitle">Add New Estimate</h2>
             <form id="estimateForm">
                 <div class="form-grid">
                     <div class="form-group">
@@ -563,6 +732,10 @@ tbody tr:hover {
                     <div class="form-group full-width">
                         <label for="comment">Comment</label>
                         <textarea id="comment" placeholder="Enter comment (optional)"></textarea>
+                        <div class="save-comment-section">
+                            <button type="button" class="save-comment-btn" onclick="saveComment()">Save Comment</button>
+                            <span class="comment-saved-msg" id="commentSavedMsg">✓ Comment saved</span>
+                        </div>
                     </div>
                 </div>
 
@@ -574,8 +747,52 @@ tbody tr:hover {
         </div>
     </div>
 
+    <!-- View Modal -->
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal view-modal">
+            <h2>Estimate Details</h2>
+            <div class="view-modal-content">
+                <div class="comments-section">
+                    <h3>Comments</h3>
+                    <div class="comments-list" id="commentsList">
+                    </div>
+                    <div class="add-comment-form">
+                        <textarea id="newComment" placeholder="Add a new comment..."></textarea>
+                        <button class="add-comment-btn" onclick="addNewComment()">Add Comment</button>
+                    </div>
+                </div>
+
+                <div class="status-section">
+                    <h3>Status</h3>
+                    <div class="status-options">
+                        <div class="status-option">
+                            <input type="checkbox" id="statusNoAnswer" value="no_answer" onchange="updateStatus(this)">
+                            <label for="statusNoAnswer">No Answer</label>
+                        </div>
+                        <div class="status-option">
+                            <input type="checkbox" id="statusThinking" value="thinking" onchange="updateStatus(this)">
+                            <label for="statusThinking">Thinking</label>
+                        </div>
+                        <div class="status-option">
+                            <input type="checkbox" id="statusSold" value="sold" onchange="updateStatus(this)">
+                            <label for="statusSold">Sold</label>
+                        </div>
+                        <div class="status-option">
+                            <input type="checkbox" id="statusRejected" value="rejected" onchange="updateStatus(this)">
+                            <label for="statusRejected">Rejected</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeViewModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-       let editingEstimateId = null;
+        let editingEstimateId = null;
+        let currentViewEstimateId = null;
 
         document.addEventListener('DOMContentLoaded', function() {
             if (!sessionStorage.getItem('authToken')) {
@@ -606,7 +823,7 @@ tbody tr:hover {
         function openAddModal() {
             editingEstimateId = null;
             const modal = document.getElementById('addModal');
-            const modalTitle = modal.querySelector('h2');
+            const modalTitle = document.getElementById('modalTitle');
             const dateInput = document.getElementById('date');
             const form = document.getElementById('estimateForm');
             
@@ -625,18 +842,19 @@ tbody tr:hover {
             if (dateInput) {
                 dateInput.valueAsDate = new Date();
             }
+
+            document.getElementById('commentSavedMsg').classList.remove('show');
         }
 
         function openEditModal(estimate) {
             editingEstimateId = estimate.id;
             const modal = document.getElementById('addModal');
-            const modalTitle = modal.querySelector('h2');
+            const modalTitle = document.getElementById('modalTitle');
             
             if (modalTitle) {
                 modalTitle.textContent = 'Edit Estimate';
             }
             
-            // Fill form with existing data
             document.getElementById('date').value = estimate.date;
             document.getElementById('manager').value = estimate.manager;
             document.getElementById('resource').value = estimate.resource;
@@ -647,6 +865,8 @@ tbody tr:hover {
             if (modal) {
                 modal.classList.add('active');
             }
+
+            document.getElementById('commentSavedMsg').classList.remove('show');
         }
 
         function closeAddModal() {
@@ -658,6 +878,163 @@ tbody tr:hover {
             }
             if (form) {
                 form.reset();
+            }
+        }
+
+        async function saveComment() {
+            if (!editingEstimateId) {
+                alert('Please save the estimate first');
+                return;
+            }
+
+            const commentText = document.getElementById('comment').value;
+            if (!commentText.trim()) {
+                alert('Please enter a comment');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/comments/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        estimate_id: editingEstimateId,
+                        comment_text: commentText
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const msg = document.getElementById('commentSavedMsg');
+                    msg.classList.add('show');
+                    setTimeout(() => {
+                        msg.classList.remove('show');
+                    }, 3000);
+                } else {
+                    alert('Error saving comment');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error saving comment');
+            }
+        }
+
+        async function openViewModal(estimate) {
+            currentViewEstimateId = estimate.id;
+            const modal = document.getElementById('viewModal');
+            
+            if (modal) {
+                modal.classList.add('active');
+            }
+
+            await loadComments(estimate.id);
+            loadCurrentStatus(estimate.status);
+        }
+
+        function closeViewModal() {
+            const modal = document.getElementById('viewModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+            currentViewEstimateId = null;
+            document.getElementById('newComment').value = '';
+        }
+
+        async function loadComments(estimateId) {
+            try {
+                const response = await fetch(`/api/comments/list?estimate_id=${estimateId}`);
+                const data = await response.json();
+
+                const commentsList = document.getElementById('commentsList');
+
+                if (!data.success || data.data.length === 0) {
+                    commentsList.innerHTML = '<div class="no-comments">No comments yet</div>';
+                    return;
+                }
+
+                commentsList.innerHTML = data.data.map(comment => `
+                    <div class="comment-item">
+                        <div class="comment-text">${comment.comment_text}</div>
+                        <div class="comment-date">${new Date(comment.created_at).toLocaleString()}</div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+
+        async function addNewComment() {
+            const commentText = document.getElementById('newComment').value;
+            
+            if (!commentText.trim()) {
+                alert('Please enter a comment');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/comments/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        estimate_id: currentViewEstimateId,
+                        comment_text: commentText
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('newComment').value = '';
+                    await loadComments(currentViewEstimateId);
+                } else {
+                    alert('Error adding comment');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding comment');
+            }
+        }
+
+        function loadCurrentStatus(status) {
+            document.querySelectorAll('.status-option input').forEach(cb => {
+                cb.checked = (cb.value === status);
+            });
+        }
+
+        async function updateStatus(checkbox) {
+            document.querySelectorAll('.status-option input').forEach(cb => {
+                if (cb !== checkbox) cb.checked = false;
+            });
+
+            const newStatus = checkbox.checked ? checkbox.value : 'pending';
+
+            try {
+                const response = await fetch('/api/estimates/update-status', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: currentViewEstimateId,
+                        status: newStatus
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    loadEstimates();
+                } else {
+                    alert('Error updating status');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating status');
             }
         }
 
@@ -693,7 +1070,7 @@ tbody tr:hover {
                 }
 
                 tbody.innerHTML = data.data.map(est => `
-                    <tr style="cursor: pointer;" onclick='openEditModal(${JSON.stringify(est).replace(/'/g, "&apos;")})'>
+                    <tr onclick='openEditModal(${JSON.stringify(est).replace(/'/g, "&apos;")})'>
                         <td>${formatDate(est.date)}</td>
                         <td>${est.manager}</td>
                         <td>${est.resource}</td>
@@ -704,7 +1081,7 @@ tbody tr:hover {
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
-                        <td><button class="action-btn" onclick="event.stopPropagation()">View</button></td>
+                        <td><button class="action-btn" onclick="event.stopPropagation(); openViewModal(${JSON.stringify(est).replace(/'/g, '&apos;')})">View</button></td>
                         <td>${est.status}</td>
                     </tr>
                 `).join('');
@@ -736,7 +1113,6 @@ tbody tr:hover {
                 let response;
                 
                 if (editingEstimateId) {
-                    // Update existing estimate
                     estimateData.id = editingEstimateId;
                     response = await fetch('/api/estimates/update', {
                         method: 'PUT',
@@ -746,7 +1122,6 @@ tbody tr:hover {
                         body: JSON.stringify(estimateData)
                     });
                 } else {
-                    // Add new estimate
                     response = await fetch('/api/estimates/add', {
                         method: 'POST',
                         headers: {
@@ -759,6 +1134,9 @@ tbody tr:hover {
                 const data = await response.json();
 
                 if (data.success) {
+                    if (!editingEstimateId) {
+                        editingEstimateId = data.data.id;
+                    }
                     closeAddModal();
                     loadEstimates();
                 } else {
