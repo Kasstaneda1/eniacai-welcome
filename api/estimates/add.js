@@ -1,7 +1,6 @@
-import { query } from '../db.js';
+const { query } = require('../db');
 
-export default async function handler(req, res) {
-  // CORS headers
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -17,7 +16,6 @@ export default async function handler(req, res) {
   try {
     const { date, manager, resource, technician, client, comment } = req.body;
 
-    // Validation
     if (!date || !manager || !resource || !technician || !client) {
       return res.status(400).json({
         success: false,
@@ -43,4 +41,4 @@ export default async function handler(req, res) {
       error: 'Failed to add estimate'
     });
   }
-}
+};
