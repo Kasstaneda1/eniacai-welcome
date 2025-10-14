@@ -339,9 +339,14 @@
     </div>
 
     <script>
-        if (!sessionStorage.getItem('authToken')) {
-            window.location.href = '/';
-        }
+      if (!sessionStorage.getItem('authToken')) {
+    window.location.href = '/';
+}
+
+// Check if user has manager role
+if (sessionStorage.getItem('userRole') !== 'manager') {
+    window.location.href = '/estimates.html';
+}
 
         function logout() {
             sessionStorage.clear();
