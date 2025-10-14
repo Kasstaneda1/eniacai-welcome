@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Dashboard</title>
+    <title>Manager Dashboard - ENIAC AI</title>
     <style>
         * {
             margin: 0;
@@ -13,91 +13,249 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #e8f4f8 0%, #d4e7f0 100%);
+            background: #f0f2f5;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            padding: 20px 40px;
+            box-shadow: 0 2px 8px rgba(0, 51, 153, 0.2);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .company-name {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .main-content {
+            flex: 1;
             padding: 40px 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .page-header {
             background: white;
-            padding: 50px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(100, 150, 180, 0.15);
-            border-top: 4px solid #6ba3d0;
+            padding: 35px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            border-left: 4px solid #003399;
         }
 
-        h1 {
-            color: #4a7fa0;
-            margin-bottom: 40px;
-            text-align: center;
+        .page-header h1 {
+            color: #003399;
+            font-size: 2em;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        .button-grid {
+        .page-header p {
+            color: #6b7280;
+            font-size: 1em;
+        }
+
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
-        .dashboard-btn {
+        .dashboard-card {
             background: white;
-            border: 3px solid #6ba3d0;
-            padding: 50px 30px;
-            border-radius: 12px;
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #4a7fa0;
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
             cursor: pointer;
             transition: all 0.3s ease;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 51, 153, 0.15);
+            border-color: #003399;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            padding: 30px;
             text-align: center;
         }
 
-        .dashboard-btn:hover {
-            background: #6ba3d0;
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
             color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(107, 163, 208, 0.3);
-        }
-
-        .logout-btn {
-            margin-top: 40px;
-            background: #e8f0f5;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            color: #6b8a9f;
+            font-size: 1.4em;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .logout-btn:hover {
-            background: #d4e7f0;
+        .card-body {
+            padding: 25px 30px;
+            background: white;
         }
 
-        @media (max-width: 600px) {
-            .button-grid {
+        .card-description {
+            color: #6b7280;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #f9fafb;
+            padding: 20px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9em;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .user-section {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .dashboard-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Manager Dashboard</h1>
-        <div class="button-grid">
-            <button class="dashboard-btn" onclick="window.location.href='#'">Первичка</button>
-            <button class="dashboard-btn" onclick="window.location.href='/estimates.html'">Естимейты</button>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo">🏢</div>
+                <div class="company-name">ENIAC AI</div>
+            </div>
+            <div class="user-section">
+                <div class="user-info">👤 Manager</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
-        <center>
-            <button class="logout-btn" onclick="logout()">Logout</button>
-        </center>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Manager Dashboard</h1>
+                <p>Select a module to continue</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card" onclick="window.location.href='#'">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <div class="card-title">Initial Records</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">
+                            Manage and review initial client records, documentation, and contact information.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="dashboard-card" onclick="window.location.href='/estimates.html'">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">Estimates</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">
+                            View and manage project estimates, pricing, and client quotations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 ENIAC AI Corporation. All rights reserved.
     </div>
 
     <script>
-        // Проверка авторизации
         if (!sessionStorage.getItem('authToken')) {
             window.location.href = '/';
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENIAC AI - Welcome</title>
+    <title>ENIAC AI - Enterprise Portal</title>
     <style>
         * {
             margin: 0;
@@ -13,83 +13,130 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #e8f4f8 0%, #d4e7f0 100%);
+            background: #f0f2f5;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            flex-direction: column;
         }
 
-        .container {
-            background: white;
-            padding: 50px 60px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(100, 150, 180, 0.15);
-            text-align: center;
-            max-width: 550px;
-            width: 100%;
-            border-top: 4px solid #6ba3d0;
+        .header {
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            padding: 20px 40px;
+            box-shadow: 0 2px 8px rgba(0, 51, 153, 0.2);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #6ba3d0 0%, #8bc5e8 100%);
-            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5em;
+            font-size: 1.5em;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .company-name {
             color: white;
-            box-shadow: 0 4px 12px rgba(107, 163, 208, 0.3);
-        }
-
-        h1 {
-            color: #4a7fa0;
-            font-size: 1.8em;
-            margin-bottom: 15px;
+            font-size: 1.5em;
             font-weight: 600;
-            letter-spacing: -0.5px;
+            letter-spacing: 0.5px;
         }
 
-        p {
-            color: #6b8a9f;
-            font-size: 1.05em;
-            margin-bottom: 35px;
-            line-height: 1.6;
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 50px 60px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 480px;
+            width: 100%;
+            border-top: 4px solid #003399;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.25);
+        }
+
+        .login-header h1 {
+            color: #003399;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .login-header p {
+            color: #6b7280;
+            font-size: 0.95em;
         }
 
         .login-btn {
-            background: #6ba3d0;
+            width: 100%;
+            background: #003399;
             color: white;
             border: none;
-            padding: 14px 45px;
-            font-size: 1em;
+            padding: 16px;
+            font-size: 1.05em;
             font-weight: 600;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 3px 10px rgba(107, 163, 208, 0.3);
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.3);
         }
 
         .login-btn:hover {
-            background: #5a92bf;
-            box-shadow: 0 5px 15px rgba(107, 163, 208, 0.4);
+            background: #0055cc;
+            box-shadow: 0 6px 16px rgba(0, 51, 153, 0.4);
             transform: translateY(-2px);
         }
 
-        .footer {
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #e8f0f5;
-            color: #a0b5c5;
-            font-size: 0.85em;
+        .login-btn:active {
+            transform: translateY(0);
         }
 
+        .footer {
+            background: #f9fafb;
+            padding: 20px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9em;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -97,8 +144,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(75, 110, 135, 0.4);
-            backdrop-filter: blur(3px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -113,92 +160,112 @@
 
         .modal {
             background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(107, 163, 208, 0.3);
-            min-width: 400px;
-            transform: scale(0.9);
+            padding: 45px;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            min-width: 450px;
+            transform: scale(0.95);
             transition: transform 0.3s ease;
+            border-top: 4px solid #003399;
         }
 
         .modal-overlay.active .modal {
             transform: scale(1);
         }
 
+        .modal-header {
+            margin-bottom: 30px;
+        }
+
         .modal h2 {
-            color: #4a7fa0;
-            margin-bottom: 25px;
-            font-size: 1.5em;
+            color: #003399;
+            font-size: 1.6em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .modal-subtitle {
+            color: #6b7280;
+            font-size: 0.9em;
         }
 
         .input-group {
-            margin-bottom: 25px;
-            text-align: left;
+            margin-bottom: 30px;
         }
 
         .input-group label {
             display: block;
-            color: #6b8a9f;
-            margin-bottom: 8px;
-            font-weight: 500;
+            color: #374151;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95em;
         }
 
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #d4e7f0;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
             border-radius: 6px;
             font-size: 1em;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            background: #f9fafb;
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: #6ba3d0;
+            border-color: #003399;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 51, 153, 0.1);
         }
 
         .modal-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 12px;
+            margin-top: 35px;
         }
 
         .modal-btn {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border: none;
             border-radius: 6px;
             font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .cancel-btn {
-            background: #e8f0f5;
-            color: #6b8a9f;
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
         }
 
         .cancel-btn:hover {
-            background: #d4e7f0;
+            background: #e5e7eb;
+            color: #374151;
         }
 
         .submit-btn {
-            background: #6ba3d0;
+            background: #003399;
             color: white;
-            box-shadow: 0 3px 10px rgba(107, 163, 208, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 51, 153, 0.3);
         }
 
         .submit-btn:hover {
-            background: #5a92bf;
-            box-shadow: 0 5px 15px rgba(107, 163, 208, 0.4);
+            background: #0055cc;
+            box-shadow: 0 6px 16px rgba(0, 51, 153, 0.4);
         }
 
         .submit-btn:disabled {
-            background: #a0b5c5;
+            background: #9ca3af;
             cursor: not-allowed;
+            box-shadow: none;
         }
 
+        /* Notification */
         .notification {
             position: fixed;
             top: -100px;
@@ -207,59 +274,82 @@
             background: white;
             padding: 18px 30px;
             border-radius: 8px;
-            box-shadow: 0 6px 25px rgba(107, 163, 208, 0.35);
-            border-left: 4px solid #f0a8a8;
-            color: #d07070;
-            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #ef4444;
+            color: #dc2626;
+            font-weight: 600;
             z-index: 2000;
-            transition: top 0.5s ease;
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .notification.show {
             top: 30px;
         }
 
+        .notification::before {
+            content: '⚠';
+            font-size: 1.3em;
+        }
+
         @media (max-width: 600px) {
-            .container {
+            .login-container {
                 padding: 40px 30px;
             }
             
-            h1 {
-                font-size: 1.5em;
-            }
-
             .modal {
                 min-width: 90%;
-                padding: 30px 25px;
+                padding: 35px 25px;
+            }
+
+            .header {
+                padding: 15px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="notification" id="notification">
-        Please enter correct credentials
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">🏢</div>
+            <div class="company-name">ENIAC AI</div>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="logo">🏢</div>
-        <h1>Welcome to Our Company</h1>
-        <p>Enjoy using our services!</p>
-        <button class="login-btn" onclick="openModal()">Login</button>
-        <div class="footer">
-            ENIAC AI © 2025
+    <div class="notification" id="notification">
+        Invalid credentials. Please try again.
+    </div>
+
+    <div class="main-content">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-icon">🔐</div>
+                <h1>Enterprise Portal</h1>
+                <p>Access your workspace securely</p>
+            </div>
+            <button class="login-btn" onclick="openModal()">Sign In</button>
         </div>
+    </div>
+
+    <div class="footer">
+        © 2025 ENIAC AI Corporation. All rights reserved.
     </div>
 
     <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
         <div class="modal">
-            <h2>Login</h2>
+            <div class="modal-header">
+                <h2>Authentication</h2>
+                <p class="modal-subtitle">Enter your password to continue</p>
+            </div>
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
+                <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
             </div>
             <div class="modal-buttons">
                 <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
-                <button class="modal-btn submit-btn" id="loginBtn" onclick="handleLogin()">Login</button>
+                <button class="modal-btn submit-btn" id="loginBtn" onclick="handleLogin()">Sign In</button>
             </div>
         </div>
     </div>
@@ -268,7 +358,7 @@
         function openModal() {
             document.getElementById('modalOverlay').classList.add('active');
             document.getElementById('password').value = '';
-            document.getElementById('password').focus();
+            setTimeout(() => document.getElementById('password').focus(), 300);
         }
 
         function closeModal() {
@@ -300,7 +390,7 @@
             }
 
             loginBtn.disabled = true;
-            loginBtn.textContent = 'Checking...';
+            loginBtn.textContent = 'Authenticating...';
 
             try {
                 const response = await fetch('/api/login', {
@@ -320,13 +410,14 @@
                 } else {
                     showNotification();
                     document.getElementById('password').value = '';
+                    document.getElementById('password').focus();
                 }
             } catch (error) {
                 console.error('Login error:', error);
                 showNotification();
             } finally {
                 loginBtn.disabled = false;
-                loginBtn.textContent = 'Login';
+                loginBtn.textContent = 'Sign In';
             }
         }
 
