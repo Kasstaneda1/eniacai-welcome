@@ -14,49 +14,115 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #f5f0e8 0%, #e8dfc8 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
             min-height: 100vh;
             display: flex;
+            color: #fff;
         }
 
+        /* Background Animation */
+        .background-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.05;
+            animation: float 25s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            border-radius: 50%;
+            top: -10%;
+            right: -5%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #e8b429 0%, #d4a428 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            bottom: 10%;
+            left: -3%;
+            animation-delay: 5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            border-radius: 50%;
+            top: 40%;
+            right: 15%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(40px, -40px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-30px, 30px) rotate(240deg);
+            }
+        }
+
+        /* Sidebar */
         .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #fef5e7 0%, #f8ead3 100%);
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
-            border-right: 1px solid #e8d5b7;
+            position: relative;
+            z-index: 10;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(244, 197, 66, 0.1);
             display: flex;
             flex-direction: column;
+            box-shadow: 4px 0 30px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid #e8d5b7;
+            padding: 25px;
+            border-bottom: 1px solid rgba(244, 197, 66, 0.15);
         }
 
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .logo-1c {
-            width: 65px;
-            height: 38px;
+            width: 70px;
+            height: 45px;
             background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
-            border-radius: 5px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: white;
-            font-size: 1.1em;
-            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.4);
+            font-weight: 800;
+            color: #1a1a2e;
+            font-size: 1.2em;
+            box-shadow: 0 8px 24px rgba(244, 197, 66, 0.3);
+            letter-spacing: 1px;
         }
 
         .system-name {
-            font-size: 0.85em;
-            color: #5d4e37;
-            line-height: 1.3;
+            font-size: 0.9em;
+            color: #f4c542;
+            line-height: 1.4;
+            font-weight: 500;
         }
 
         .menu {
@@ -65,35 +131,51 @@
             overflow-y: auto;
         }
 
+        .menu::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .menu::-webkit-scrollbar-thumb {
+            background: rgba(244, 197, 66, 0.3);
+            border-radius: 3px;
+        }
+
         .menu-item {
-            color: #5d4e37;
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border-left: 3px solid transparent;
+            margin-bottom: 5px;
         }
 
         .menu-item-header {
-            padding: 14px 25px;
+            padding: 16px 25px;
             display: flex;
             align-items: center;
             gap: 12px;
             font-size: 0.95em;
+            transition: all 0.3s ease;
         }
 
         .menu-item:hover .menu-item-header {
-            background: rgba(244, 197, 66, 0.15);
-            border-left-color: #f4c542;
+            background: rgba(244, 197, 66, 0.1);
+            color: #f4c542;
         }
 
         .menu-item.active .menu-item-header {
-            background: rgba(244, 197, 66, 0.25);
+            background: rgba(244, 197, 66, 0.15);
             border-left-color: #f4c542;
+            color: #f4c542;
             font-weight: 600;
         }
 
         .menu-icon {
-            font-size: 1.2em;
-            width: 24px;
+            font-size: 1.3em;
+            width: 28px;
             text-align: center;
         }
 
@@ -110,110 +192,154 @@
         .submenu {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: rgba(244, 197, 66, 0.08);
+            transition: max-height 0.4s ease;
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .menu-item.expanded .submenu {
-            max-height: 300px;
+            max-height: 500px;
         }
 
         .submenu-item {
-            padding: 12px 25px 12px 60px;
-            color: #5d4e37;
+            padding: 14px 25px 14px 65px;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9em;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .submenu-item:hover {
-            background: rgba(244, 197, 66, 0.2);
+            background: rgba(244, 197, 66, 0.08);
+            color: #f4c542;
+            padding-left: 70px;
         }
 
         .submenu-item.active {
-            background: rgba(244, 197, 66, 0.3);
+            background: rgba(244, 197, 66, 0.15);
+            color: #f4c542;
             font-weight: 600;
+            border-left: 3px solid #f4c542;
         }
 
         .submenu-divider {
             height: 1px;
-            background: #e8d5b7;
-            margin: 10px 15px;
-        }
-
-        .submenu-item.filter-item {
-            font-size: 0.85em;
-        }
-
-        .submenu-item.filter-item.active {
-            background: rgba(244, 197, 66, 0.4);
-            font-weight: 700;
+            background: rgba(244, 197, 66, 0.1);
+            margin: 10px 20px;
         }
 
         .sidebar-footer {
             padding: 20px;
-            border-top: 1px solid #e8d5b7;
+            border-top: 1px solid rgba(244, 197, 66, 0.15);
         }
 
         .logout-btn {
             width: 100%;
-            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            color: #1a1a2e;
             border: none;
-            padding: 12px;
-            border-radius: 5px;
-            font-weight: 600;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             font-size: 0.85em;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(244, 197, 66, 0.3);
         }
 
         .logout-btn:hover {
-            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 197, 66, 0.5);
         }
 
+        /* Main Container */
         .main-container {
+            position: relative;
+            z-index: 10;
             flex: 1;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .top-bar {
-            background: white;
-            padding: 15px 30px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-            border-bottom: 1px solid #e8d5b7;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            padding: 18px 35px;
+            border-bottom: 1px solid rgba(244, 197, 66, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .breadcrumb {
-            color: #8b7d6b;
-            font-size: 0.9em;
+            color: rgba(244, 197, 66, 0.8);
+            font-size: 0.95em;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         .content {
             flex: 1;
-            padding: 30px;
+            padding: 35px;
             overflow-y: auto;
         }
 
-        .page-title {
-            color: #2d8659;
-            font-size: 1.8em;
-            margin-bottom: 25px;
-            font-weight: 600;
+        .content::-webkit-scrollbar {
+            width: 8px;
         }
 
+        .content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(244, 197, 66, 0.3);
+            border-radius: 4px;
+        }
+
+        .page-title {
+            color: #f4c542;
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(244, 197, 66, 0.3);
+            animation: titleSlide 0.6s ease-out;
+        }
+
+        @keyframes titleSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Table */
         .table-container {
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
             overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(244, 197, 66, 0.1);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .table-wrapper {
@@ -226,54 +352,101 @@
         }
 
         thead {
-            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            background: linear-gradient(135deg, rgba(244, 197, 66, 0.2) 0%, rgba(232, 180, 41, 0.15) 100%);
+            backdrop-filter: blur(10px);
         }
 
         th {
-            color: #5d4e37;
-            padding: 16px 14px;
+            color: #f4c542;
+            padding: 18px 16px;
             text-align: left;
             font-weight: 700;
             font-size: 0.85em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             white-space: nowrap;
-            border-right: 1px solid rgba(93, 78, 55, 0.1);
+            border-right: 1px solid rgba(244, 197, 66, 0.1);
+        }
+
+        th:last-child {
+            border-right: none;
         }
 
         tbody tr {
-            border-bottom: 1px solid #f0ebe0;
-            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(244, 197, 66, 0.05);
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
         tbody tr:hover {
-            background: #fef9ed;
-            box-shadow: inset 0 0 0 1px #f4c542;
+            background: rgba(244, 197, 66, 0.08);
+            transform: translateX(5px);
         }
 
         td {
-            padding: 14px;
-            color: #5d4e37;
+            padding: 16px;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9em;
         }
 
         .action-btn {
-            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            color: #1a1a2e;
             border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
             font-size: 0.85em;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .action-btn:hover {
-            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 197, 66, 0.4);
         }
 
+        /* Status Colors */
+        tbody tr.status-sold {
+            background: rgba(46, 204, 113, 0.1) !important;
+        }
+
+        tbody tr.status-sold:hover {
+            background: rgba(46, 204, 113, 0.15) !important;
+        }
+
+        tbody tr.status-thinking {
+            background: rgba(52, 152, 219, 0.1) !important;
+        }
+
+        tbody tr.status-thinking:hover {
+            background: rgba(52, 152, 219, 0.15) !important;
+        }
+
+        tbody tr.status-no-answer {
+            background: rgba(149, 165, 166, 0.1) !important;
+        }
+
+        tbody tr.status-no-answer:hover {
+            background: rgba(149, 165, 166, 0.15) !important;
+        }
+
+        tbody tr.status-rejected {
+            background: rgba(231, 76, 60, 0.1) !important;
+        }
+
+        tbody tr.status-rejected:hover {
+            background: rgba(231, 76, 60, 0.15) !important;
+        }
+
+        tbody tr.status-rejected td {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        /* Modals */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -281,43 +454,70 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(93, 78, 55, 0.6);
-            backdrop-filter: blur(3px);
+            background: rgba(26, 26, 46, 0);
+            backdrop-filter: blur(0px);
             z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s ease, backdrop-filter 0.5s ease;
         }
 
         .modal-overlay.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 1;
+            background: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
         }
 
         .modal {
-            background: white;
-            padding: 40px;
-            border-radius: 6px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            background: rgba(45, 45, 68, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 45px 50px;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            max-width: 650px;
             width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-            border-top: 3px solid #f4c542;
+            transform: scale(0.8) translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(244, 197, 66, 0.2);
+            position: relative;
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f4c542, #e8b429, #d4a428);
         }
 
         .modal-overlay.active .modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: rgba(244, 197, 66, 0.3);
+            border-radius: 4px;
         }
 
         .modal h2 {
-            color: #5d4e37;
-            font-size: 1.7em;
-            margin-bottom: 25px;
-            font-weight: 600;
+            color: #f4c542;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(244, 197, 66, 0.3);
         }
 
         .form-grid {
@@ -337,23 +537,25 @@
 
         .form-group label {
             display: block;
-            color: #5d4e37;
-            margin-bottom: 8px;
+            color: rgba(244, 197, 66, 0.9);
+            margin-bottom: 10px;
             font-weight: 600;
             font-size: 0.9em;
+            letter-spacing: 0.5px;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #e8d5b7;
-            border-radius: 4px;
+            padding: 14px 16px;
+            border: 2px solid rgba(244, 197, 66, 0.2);
+            border-radius: 10px;
             font-size: 0.95em;
             font-family: inherit;
             transition: all 0.3s ease;
-            background: #fefcf8;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
         }
 
         .form-group textarea {
@@ -366,65 +568,45 @@
         .form-group textarea:focus {
             outline: none;
             border-color: #f4c542;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(244, 197, 66, 0.1);
         }
 
-        .comment-section-with-save {
-            display: block;
-            opacity: 1;
-            max-height: 500px;
-            overflow: hidden;
-            transition: all 0.6s ease;
+        .form-group select {
+            cursor: pointer;
         }
 
-        .comment-section-with-save.hidden {
-            opacity: 0;
-            max-height: 0;
-            margin: 0;
-            padding: 0;
-        }
-
-        .comment-section-with-save.fade-out {
-            opacity: 0;
-            max-height: 0;
-            transform: translateY(-20px);
-        }
-
-        .save-comment-section {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #e8d5b7;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .form-group option {
+            background: #2d2d44;
+            color: #fff;
         }
 
         .save-comment-btn {
-            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            color: #1a1a2e;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             font-size: 0.9em;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(244, 197, 66, 0.3);
         }
 
         .save-comment-btn:hover {
-            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 197, 66, 0.4);
         }
 
         .comment-saved-indicator {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: #e8f5e9;
-            border-radius: 6px;
-            border-left: 3px solid #2d8659;
+            gap: 12px;
+            padding: 15px 24px;
+            background: rgba(46, 204, 113, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid #2ecc71;
             opacity: 0;
             transform: scale(0.8);
             transition: all 0.4s ease;
@@ -437,82 +619,79 @@
 
         .comment-saved-indicator .icon {
             font-size: 1.5em;
-            color: #2d8659;
+            color: #2ecc71;
         }
 
         .comment-saved-indicator .text {
-            color: #2d8659;
+            color: #2ecc71;
             font-weight: 600;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .view-modal .modal-buttons {
-            justify-content: center;
-        }
-
-        .view-modal .modal-buttons .cancel-btn {
-            flex: 0 1 300px;
+            gap: 15px;
+            margin-top: 35px;
         }
 
         .modal-btn {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
             font-size: 1em;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .cancel-btn {
-            background: #f5f0e8;
-            color: #8b7d6b;
-            border: 2px solid #e8d5b7;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(244, 197, 66, 0.2);
         }
 
         .cancel-btn:hover {
-            background: #e8dfc8;
+            background: rgba(255, 255, 255, 0.1);
+            color: #f4c542;
+            transform: translateY(-2px);
         }
 
         .save-btn {
-            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
-            box-shadow: 0 3px 10px rgba(244, 197, 66, 0.4);
-            font-weight: 700;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            color: #1a1a2e;
+            box-shadow: 0 8px 25px rgba(244, 197, 66, 0.4);
+            font-weight: 800;
         }
 
         .save-btn:hover {
-            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(244, 197, 66, 0.5);
         }
 
+        /* View Modal */
         .view-modal {
-            max-width: 900px;
+            max-width: 950px;
         }
 
         .view-modal-content {
             display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 30px;
-            margin-top: 25px;
+            grid-template-columns: 1fr 300px;
+            gap: 35px;
+            margin-top: 30px;
         }
 
         .comments-section {
-            border-right: 2px solid #e8d5b7;
-            padding-right: 30px;
+            border-right: 2px solid rgba(244, 197, 66, 0.1);
+            padding-right: 35px;
         }
 
         .comments-section h3 {
-            color: #5d4e37;
-            font-size: 1.2em;
+            color: #f4c542;
+            font-size: 1.3em;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .comments-list {
@@ -522,155 +701,138 @@
         }
 
         .comment-item {
-            background: #fefcf8;
-            padding: 15px;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 18px;
+            border-radius: 12px;
             border-left: 3px solid #f4c542;
             margin-bottom: 15px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .comment-text {
-            color: #5d4e37;
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.95em;
             line-height: 1.6;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .comment-date {
-            color: #8b7d6b;
+            color: rgba(244, 197, 66, 0.6);
             font-size: 0.8em;
         }
 
         .no-comments {
-            color: #8b7d6b;
+            color: rgba(255, 255, 255, 0.4);
             font-style: italic;
             text-align: center;
-            padding: 30px;
-        }
-
-        .add-comment-form {
-            margin-top: 20px;
+            padding: 40px;
         }
 
         .add-comment-form textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e8d5b7;
-            border-radius: 4px;
+            padding: 14px;
+            border: 2px solid rgba(244, 197, 66, 0.2);
+            border-radius: 10px;
             font-size: 0.9em;
             font-family: inherit;
             resize: vertical;
-            min-height: 80px;
-            margin-bottom: 10px;
-            background: #fefcf8;
+            min-height: 90px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .add-comment-form textarea:focus {
+            outline: none;
+            border-color: #f4c542;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(244, 197, 66, 0.1);
         }
 
         .add-comment-btn {
-            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
+            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            color: #1a1a2e;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             font-size: 0.9em;
+            transition: all 0.3s ease;
         }
 
         .add-comment-btn:hover {
-            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 197, 66, 0.4);
         }
 
         .status-section h3 {
-            color: #5d4e37;
-            font-size: 1.2em;
+            color: #f4c542;
+            font-size: 1.3em;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .status-options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .status-option {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: #fefcf8;
-            border-radius: 6px;
+            gap: 12px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border: 2px solid transparent;
         }
 
         .status-option:hover {
-            background: #fef9ed;
+            background: rgba(244, 197, 66, 0.1);
             border-color: #f4c542;
         }
 
         .status-option input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
         }
 
         .status-option label {
             cursor: pointer;
-            color: #5d4e37;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
             flex: 1;
         }
 
         .status-option.blurred {
             opacity: 0.3;
-            filter: blur(2px);
+            filter: blur(1px);
             transition: all 0.3s ease;
         }
 
         .status-option input[type="checkbox"]:checked ~ label {
-            color: #2d8659;
+            color: #f4c542;
             font-weight: 700;
         }
 
-        /* Row colors by status */
-        tbody tr.status-sold {
-            background: #e8f5e9 !important;
-        }
-
-        tbody tr.status-sold:hover {
-            background: #d4edda !important;
-        }
-
-        tbody tr.status-thinking {
-            background: #e3f2fd !important;
-        }
-
-        tbody tr.status-thinking:hover {
-            background: #bbdefb !important;
-        }
-
-        tbody tr.status-no-answer {
-            background: #f5f5f5 !important;
-        }
-
-        tbody tr.status-no_answer:hover {
-            background: #eeeeee !important;
-        }
-
-        tbody tr.status-rejected {
-            background: #e0f7f8 !important;
-        }
-
-        tbody tr.status-rejected:hover {
-            background: #b2ebf2 !important;
-        }
-
-        tbody tr.status-rejected td {
-            text-decoration: line-through;
-            color: #46bdc6;
-        }
-
+        /* Notifications */
         .notification-container {
             position: fixed;
             top: 30px;
@@ -684,19 +846,21 @@
         }
 
         .notification {
-            background: white;
-            padding: 18px 30px;
-            border-radius: 8px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(45, 45, 68, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 20px 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             gap: 15px;
-            min-width: 350px;
+            min-width: 380px;
             opacity: 0;
             transform: translateY(-20px);
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             pointer-events: auto;
             border-left: 4px solid #f4c542;
+            border: 1px solid rgba(244, 197, 66, 0.3);
         }
 
         .notification.show {
@@ -705,15 +869,15 @@
         }
 
         .notification.success {
-            border-left-color: #2d8659;
+            border-left-color: #2ecc71;
         }
 
         .notification.error {
-            border-left-color: #ef4444;
+            border-left-color: #e74c3c;
         }
 
         .notification.info {
-            border-left-color: #6ba3d0;
+            border-left-color: #3498db;
         }
 
         .notification-icon {
@@ -727,17 +891,36 @@
 
         .notification-title {
             font-weight: 700;
-            color: #5d4e37;
+            color: #f4c542;
             margin-bottom: 4px;
             font-size: 1em;
         }
 
         .notification-message {
-            color: #8b7d6b;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9em;
         }
 
-        @media (max-width: 968px) {
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .view-modal-content {
+                grid-template-columns: 1fr;
+            }
+
+            .comments-section {
+                border-right: none;
+                border-bottom: 2px solid rgba(244, 197, 66, 0.1);
+                padding-right: 0;
+                padding-bottom: 30px;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
             body {
                 flex-direction: column;
             }
@@ -750,20 +933,23 @@
                 grid-template-columns: 1fr;
             }
 
-            .view-modal-content {
-                grid-template-columns: 1fr;
+            .content {
+                padding: 25px 15px;
             }
 
-            .comments-section {
-                border-right: none;
-                border-bottom: 2px solid #e8d5b7;
-                padding-right: 0;
-                padding-bottom: 30px;
+            .page-title {
+                font-size: 1.6em;
             }
         }
     </style>
 </head>
 <body>
+    <div class="background-animation">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <div class="notification-container" id="notificationContainer"></div>
 
     <div class="sidebar">
@@ -787,27 +973,27 @@
                         <span>Add</span>
                     </div>
                     <div class="submenu-divider"></div>
-                    <div class="submenu-item filter-item active" onclick="filterByStatus('all')">
+                    <div class="submenu-item active" onclick="filterByStatus('all')">
                         <span>📋</span>
                         <span>All</span>
                     </div>
-                    <div class="submenu-item filter-item" onclick="filterByStatus('diagnostic')">
+                    <div class="submenu-item" onclick="filterByStatus('diagnostic')">
                         <span>🔍</span>
                         <span>Diagnostic</span>
                     </div>
-                    <div class="submenu-item filter-item" onclick="filterByStatus('no_answer')">
-                        <span>📵</span>
+                    <div class="submenu-item" onclick="filterByStatus('no_answer')">
+                        <span>🔵</span>
                         <span>No Answer</span>
                     </div>
-                    <div class="submenu-item filter-item" onclick="filterByStatus('thinking')">
+                    <div class="submenu-item" onclick="filterByStatus('thinking')">
                         <span>💭</span>
                         <span>Thinking</span>
                     </div>
-                    <div class="submenu-item filter-item" onclick="filterByStatus('search')">
+                    <div class="submenu-item" onclick="filterByStatus('search')">
                         <span>💰</span>
                         <span>Sold</span>
                     </div>
-                    <div class="submenu-item filter-item" onclick="filterByStatus('rejected')">
+                    <div class="submenu-item" onclick="filterByStatus('rejected')">
                         <span>❌</span>
                         <span>Rejected</span>
                     </div>
@@ -870,6 +1056,7 @@
         </div>
     </div>
 
+    <!-- Add/Edit Modal -->
     <div class="modal-overlay" id="formModal">
         <div class="modal">
             <h2 id="modalTitle">Add New Estimate</h2>
@@ -917,10 +1104,10 @@
                         <input type="text" id="client" placeholder="Enter client name" required>
                     </div>
 
-                    <div class="form-group full-width comment-section-with-save" id="commentSection">
+                    <div class="form-group full-width" id="commentSection">
                         <label for="comment">Comment</label>
                         <textarea id="comment" placeholder="Enter comment (optional)"></textarea>
-                        <div class="save-comment-section">
+                        <div style="margin-top: 15px;">
                             <button type="button" class="save-comment-btn" onclick="saveCommentTemp()">Save Comment</button>
                         </div>
                     </div>
@@ -941,6 +1128,7 @@
         </div>
     </div>
 
+    <!-- View Modal -->
     <div class="modal-overlay" id="viewModal">
         <div class="modal view-modal">
             <h2>Estimate Details</h2>
@@ -977,8 +1165,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-buttons" style="justify-content: center;">
-                <button class="modal-btn cancel-btn" style="max-width: 300px;" onclick="closeViewModal()">Close</button>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeViewModal()">Close</button>
             </div>
         </div>
     </div>
@@ -988,7 +1176,7 @@
         let currentViewEstimateId = null;
         let estimatesData = [];
         let pendingComment = null;
-        let currentFilter = 'all'; // Текущий фильтр
+        let currentFilter = 'all';
 
         function showNotification(message, type = 'info', title = '') {
             const container = document.getElementById('notificationContainer');
@@ -1067,35 +1255,23 @@
             const form = document.getElementById('estimateForm');
             const indicator = document.getElementById('commentSavedIndicator');
             
-            if (modalTitle) {
-                modalTitle.textContent = 'Add New Estimate';
-            }
-            
-            if (commentSection) {
-                commentSection.classList.remove('hidden');
-                commentSection.classList.remove('fade-out');
-                commentSection.style.display = 'block';
-                commentSection.style.opacity = '1';
-                commentSection.style.maxHeight = '500px';
-            }
-            
+            if (modalTitle) modalTitle.textContent = 'Add New Estimate';
+            if (commentSection) commentSection.style.display = 'block';
             if (indicator) {
                 indicator.style.display = 'none';
                 const indElement = indicator.querySelector('.comment-saved-indicator');
-                if (indElement) {
-                    indElement.classList.remove('show');
-                }
+                if (indElement) indElement.classList.remove('show');
             }
-            
-            if (form) {
-                form.reset();
-            }
-            
-            if (modal) {
-                modal.classList.add('active');
-            }
+            if (form) form.reset();
             
             document.getElementById('date').valueAsDate = new Date();
+            
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add('active');
+                });
+            });
         }
 
         function openEditModal(estimateId) {
@@ -1110,17 +1286,9 @@
             const commentSection = document.getElementById('commentSection');
             const indicator = document.getElementById('commentSavedIndicator');
             
-            if (modalTitle) {
-                modalTitle.textContent = 'Edit Estimate';
-            }
-            
-            if (commentSection) {
-                commentSection.classList.add('hidden');
-            }
-            
-            if (indicator) {
-                indicator.style.display = 'none';
-            }
+            if (modalTitle) modalTitle.textContent = 'Edit Estimate';
+            if (commentSection) commentSection.style.display = 'none';
+            if (indicator) indicator.style.display = 'none';
             
             document.getElementById('date').value = estimate.date;
             document.getElementById('manager').value = estimate.manager;
@@ -1128,9 +1296,12 @@
             document.getElementById('technician').value = estimate.technician;
             document.getElementById('client').value = estimate.client;
             
-            if (modal) {
-                modal.classList.add('active');
-            }
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add('active');
+                });
+            });
         }
 
         function closeFormModal() {
@@ -1142,28 +1313,18 @@
             const commentSection = document.getElementById('commentSection');
             const indicator = document.getElementById('commentSavedIndicator');
             
-            if (modal) {
-                modal.classList.remove('active');
-            }
-            if (form) {
-                form.reset();
-            }
+            modal.classList.remove('active');
             
-            if (commentSection) {
-                commentSection.classList.remove('hidden');
-                commentSection.classList.remove('fade-out');
-                commentSection.style.display = 'block';
-                commentSection.style.opacity = '1';
-                commentSection.style.maxHeight = '500px';
-            }
-            
-            if (indicator) {
-                indicator.style.display = 'none';
-                const indElement = indicator.querySelector('.comment-saved-indicator');
-                if (indElement) {
-                    indElement.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                if (form) form.reset();
+                if (commentSection) commentSection.style.display = 'block';
+                if (indicator) {
+                    indicator.style.display = 'none';
+                    const indElement = indicator.querySelector('.comment-saved-indicator');
+                    if (indElement) indElement.classList.remove('show');
                 }
-            }
+            }, 500);
         }
 
         function saveCommentTemp() {
@@ -1179,19 +1340,13 @@
             const commentSection = document.getElementById('commentSection');
             const indicator = document.getElementById('commentSavedIndicator');
             
-            commentSection.classList.add('fade-out');
+            commentSection.style.display = 'none';
+            indicator.style.display = 'block';
             
             setTimeout(() => {
-                commentSection.style.display = 'none';
-                indicator.style.display = 'block';
-                
-                setTimeout(() => {
-                    const indElement = indicator.querySelector('.comment-saved-indicator');
-                    if (indElement) {
-                        indElement.classList.add('show');
-                    }
-                }, 50);
-            }, 600);
+                const indElement = indicator.querySelector('.comment-saved-indicator');
+                if (indElement) indElement.classList.add('show');
+            }, 50);
             
             showNotification('Comment prepared. Click Save to create estimate with comment.', 'success');
         }
@@ -1200,13 +1355,15 @@
             currentViewEstimateId = estimateId;
             const modal = document.getElementById('viewModal');
             
-            if (modal) {
-                modal.classList.add('active');
-            }
+            modal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add('active');
+                });
+            });
 
             await loadComments(estimateId);
             
-            // Сбросить все чекбоксы БЕЗ blur
             document.querySelectorAll('.status-option').forEach(opt => {
                 opt.classList.remove('blurred');
             });
@@ -1214,7 +1371,6 @@
                 cb.checked = false;
             });
             
-            // Load current status
             const estimate = estimatesData.find(e => e.id === estimateId);
             if (estimate) {
                 loadCurrentStatus(estimate.status);
@@ -1222,20 +1378,15 @@
         }
 
         function loadCurrentStatus(status) {
-            // Маппинг: search → sold для отображения
             const checkValue = status === 'search' ? 'sold' : status;
             
             let hasSelection = false;
             
             document.querySelectorAll('.status-option input').forEach(cb => {
                 cb.checked = (cb.value === checkValue);
-                
-                if (cb.checked) {
-                    hasSelection = true;
-                }
+                if (cb.checked) hasSelection = true;
             });
             
-            // Применяем blur ТОЛЬКО если что-то выбрано
             if (hasSelection) {
                 document.querySelectorAll('.status-option input').forEach(cb => {
                     if (cb.checked) {
@@ -1245,7 +1396,6 @@
                     }
                 });
             } else {
-                // Если ничего не выбрано - убираем все blur
                 document.querySelectorAll('.status-option').forEach(opt => {
                     opt.classList.remove('blurred');
                 });
@@ -1253,7 +1403,6 @@
         }
 
         async function updateStatus(checkbox) {
-            // Если сняли галочку - убираем blur со всех и выходим
             if (!checkbox.checked) {
                 document.querySelectorAll('.status-option').forEach(opt => {
                     opt.classList.remove('blurred');
@@ -1262,13 +1411,10 @@
                     cb.checked = false;
                 });
                 
-                // Сбрасываем статус на diagnostic
                 try {
                     const response = await fetch('/api/estimates/update-status', {
                         method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             id: currentViewEstimateId,
                             status: 'diagnostic'
@@ -1276,7 +1422,6 @@
                     });
 
                     const data = await response.json();
-
                     if (data.success) {
                         loadEstimates();
                         showNotification('Status reset to Diagnostic', 'success');
@@ -1284,18 +1429,13 @@
                 } catch (error) {
                     console.error('Error:', error);
                 }
-                
                 return;
             }
 
-            // Снимаем все галочки кроме текущей
             document.querySelectorAll('.status-option input').forEach(cb => {
-                if (cb !== checkbox) {
-                    cb.checked = false;
-                }
+                if (cb !== checkbox) cb.checked = false;
             });
 
-            // Применяем blur ко всем кроме выбранного
             document.querySelectorAll('.status-option').forEach(opt => {
                 const cb = opt.querySelector('input');
                 if (cb === checkbox && checkbox.checked) {
@@ -1310,9 +1450,7 @@
             try {
                 const response = await fetch('/api/estimates/update-status', {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         id: currentViewEstimateId,
                         status: newStatus
@@ -1320,7 +1458,6 @@
                 });
 
                 const data = await response.json();
-
                 if (data.success) {
                     loadEstimates();
                     showNotification('Status updated successfully!', 'success');
@@ -1335,11 +1472,13 @@
 
         function closeViewModal() {
             const modal = document.getElementById('viewModal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-            currentViewEstimateId = null;
-            document.getElementById('newComment').value = '';
+            modal.classList.remove('active');
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+                currentViewEstimateId = null;
+                document.getElementById('newComment').value = '';
+            }, 500);
         }
 
         async function loadComments(estimateId) {
@@ -1377,9 +1516,7 @@
             try {
                 const response = await fetch('/api/comments/add', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         estimate_id: currentViewEstimateId,
                         comment_text: commentText
@@ -1411,10 +1548,7 @@
 
         async function loadEstimates() {
             const tbody = document.getElementById('estimatesTable');
-            
-            if (!tbody) {
-                return;
-            }
+            if (!tbody) return;
             
             try {
                 const response = await fetch('/api/estimates/list');
@@ -1423,7 +1557,7 @@
                 if (!data.success || data.data.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="12" style="text-align: center; padding: 50px; color: #8b7d6b;">
+                            <td colspan="12" style="text-align: center; padding: 50px; color: rgba(255, 255, 255, 0.5);">
                                 No estimates yet. Click "Add" to create your first estimate.
                             </td>
                         </tr>
@@ -1432,8 +1566,6 @@
                 }
 
                 estimatesData = data.data;
-
-                // Применяем текущий фильтр после загрузки данных
                 filterByStatus(currentFilter);
             } catch (error) {
                 console.error('Error loading estimates:', error);
@@ -1443,25 +1575,19 @@
         function filterByStatus(status) {
             currentFilter = status;
             
-            // Обновляем активную кнопку в меню
-            document.querySelectorAll('.filter-item').forEach(item => {
+            document.querySelectorAll('.submenu-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Находим активный элемент фильтра
-            const activeFilterItem = Array.from(document.querySelectorAll('.filter-item')).find(item => 
+            const activeFilterItem = Array.from(document.querySelectorAll('.submenu-item')).find(item => 
                 item.getAttribute('onclick')?.includes(`'${status}'`)
             );
             if (activeFilterItem) {
                 activeFilterItem.classList.add('active');
             }
             
-            // Фильтруем таблицу
             const tbody = document.getElementById('estimatesTable');
-            
-            if (!tbody || estimatesData.length === 0) {
-                return;
-            }
+            if (!tbody || estimatesData.length === 0) return;
 
             let filteredData = estimatesData;
             
@@ -1472,7 +1598,7 @@
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="12" style="text-align: center; padding: 50px; color: #8b7d6b;">
+                        <td colspan="12" style="text-align: center; padding: 50px; color: rgba(255, 255, 255, 0.5);">
                             No estimates with "${getStatusLabel(status)}" status.
                         </td>
                     </tr>
@@ -1508,7 +1634,7 @@
                 'no_answer': 'No Answer',
                 'thinking': 'Thinking',
                 'sold': 'Sold',
-                'search': 'Sold', // Отображаем search как Sold
+                'search': 'Sold',
                 'rejected': 'Rejected',
                 'all': 'All'
             };
@@ -1534,17 +1660,13 @@
                     estimateData.id = editingEstimateId;
                     response = await fetch('/api/estimates/update', {
                         method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(estimateData)
                     });
                 } else {
                     response = await fetch('/api/estimates/add', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(estimateData)
                     });
                 }
@@ -1558,9 +1680,7 @@
                         try {
                             const commentResponse = await fetch('/api/comments/add', {
                                 method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
+                                headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
                                     estimate_id: newEstimateId,
                                     comment_text: pendingComment
