@@ -437,6 +437,14 @@
             margin-top: 30px;
         }
 
+        .view-modal .modal-buttons {
+            justify-content: center;
+        }
+
+        .view-modal .modal-buttons .cancel-btn {
+            flex: 0 1 300px;
+        }
+
         .modal-btn {
             flex: 1;
             padding: 14px;
@@ -628,7 +636,7 @@
             background: #bbdefb !important;
         }
 
-        tbody tr.status-no_answer {
+        tbody tr.status-no-answer {
             background: #f5f5f5 !important;
         }
 
@@ -941,8 +949,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-buttons">
-                <button class="modal-btn cancel-btn" onclick="closeViewModal()">Close</button>
+            <div class="modal-buttons" style="justify-content: center;">
+                <button class="modal-btn cancel-btn" style="max-width: 300px;" onclick="closeViewModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1172,6 +1180,14 @@
 
             await loadComments(estimateId);
             
+            // Сбросить все чекбоксы БЕЗ blur
+            document.querySelectorAll('.status-option').forEach(opt => {
+                opt.classList.remove('blurred');
+            });
+            document.querySelectorAll('.status-option input').forEach(cb => {
+                cb.checked = false;
+            });
+            
             // Load current status
             const estimate = estimatesData.find(e => e.id === estimateId);
             if (estimate) {
@@ -1180,36 +1196,53 @@
         }
 
         function loadCurrentStatus(status) {
+            // Маппинг: search → sold для отображения
+            const checkValue = status === 'search' ? 'sold' : status;
+            
+            let hasSelection = false;
+            
             document.querySelectorAll('.status-option input').forEach(cb => {
-                // Маппинг: search → sold для отображения
-                const checkValue = status === 'search' ? 'sold' : status;
                 cb.checked = (cb.value === checkValue);
                 
                 if (cb.checked) {
-                    cb.parentElement.classList.remove('blurred');
-                } else {
-                    cb.parentElement.classList.add('blurred');
+                    hasSelection = true;
                 }
             });
+            
+            // Применяем blur ТОЛЬКО если что-то выбрано
+            if (hasSelection) {
+                document.querySelectorAll('.status-option input').forEach(cb => {
+                    if (cb.checked) {
+                        cb.parentElement.classList.remove('blurred');
+                    } else {
+                        cb.parentElement.classList.add('blurred');
+                    }
+                });
+            } else {
+                // Если ничего не выбрано - убираем все blur
+                document.querySelectorAll('.status-option').forEach(opt => {
+                    opt.classList.remove('blurred');
+                });
+            }
         }
 
         async function updateStatus(checkbox) {
-            // Убираем blur у всех
-            document.querySelectorAll('.status-option').forEach(opt => {
-                opt.classList.remove('blurred');
-            });
-
             // Снимаем все галочки кроме текущей
             document.querySelectorAll('.status-option input').forEach(cb => {
                 if (cb !== checkbox) {
                     cb.checked = false;
-                    cb.parentElement.classList.add('blurred'); // Blur для не выбранных
                 }
             });
 
-            if (checkbox.checked) {
-                checkbox.parentElement.classList.remove('blurred');
-            }
+            // Применяем blur ко всем кроме выбранного
+            document.querySelectorAll('.status-option').forEach(opt => {
+                const cb = opt.querySelector('input');
+                if (cb === checkbox && checkbox.checked) {
+                    opt.classList.remove('blurred');
+                } else {
+                    opt.classList.add('blurred');
+                }
+            });
 
             const newStatus = checkbox.checked ? checkbox.value : 'diagnostic';
 
@@ -1340,7 +1373,7 @@
                 estimatesData = data.data;
 
                 tbody.innerHTML = data.data.map(est => {
-                    const statusClass = `status-${est.status.replace('_', '-')}`;
+                    const statusClass = `status-${est.status.replace(/_/g, '-')}`;
                     return `
                     <tr class="${statusClass}" onclick="openEditModal(${est.id})">
                         <td>${formatDate(est.date)}</td>
