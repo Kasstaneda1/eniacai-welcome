@@ -1227,6 +1227,41 @@
         }
 
         async function updateStatus(checkbox) {
+            // Если сняли галочку - убираем blur со всех и выходим
+            if (!checkbox.checked) {
+                document.querySelectorAll('.status-option').forEach(opt => {
+                    opt.classList.remove('blurred');
+                });
+                document.querySelectorAll('.status-option input').forEach(cb => {
+                    cb.checked = false;
+                });
+                
+                // Сбрасываем статус на diagnostic
+                try {
+                    const response = await fetch('/api/estimates/update-status', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: currentViewEstimateId,
+                            status: 'diagnostic'
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        loadEstimates();
+                        showNotification('Status reset to Diagnostic', 'success');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+                
+                return;
+            }
+
             // Снимаем все галочки кроме текущей
             document.querySelectorAll('.status-option input').forEach(cb => {
                 if (cb !== checkbox) {
@@ -1244,7 +1279,7 @@
                 }
             });
 
-            const newStatus = checkbox.checked ? checkbox.value : 'diagnostic';
+            const newStatus = checkbox.value;
 
             try {
                 const response = await fetch('/api/estimates/update-status', {
@@ -1373,7 +1408,9 @@
                 estimatesData = data.data;
 
                 tbody.innerHTML = data.data.map(est => {
-                    const statusClass = `status-${est.status.replace(/_/g, '-')}`;
+                    // Маппинг: search → sold для отображения
+                    let displayStatus = est.status === 'search' ? 'sold' : est.status;
+                    const statusClass = `status-${displayStatus.replace(/_/g, '-')}`;
                     return `
                     <tr class="${statusClass}" onclick="openEditModal(${est.id})">
                         <td>${formatDate(est.date)}</td>
