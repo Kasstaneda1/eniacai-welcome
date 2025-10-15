@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technician Portal - ENIAC AI</title>
-    <title>Technician Portal - ENIAC AI</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='15' fill='%23f4c542'/%3E%3Ctext x='50' y='63' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%235d4e37' text-anchor='middle'%3EMY-C%3C/text%3E%3C/svg%3E">
     <style>
         * {
@@ -14,18 +13,45 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #f5f0e8 0%, #e8dfc8 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
+        /* Decorative circles */
+        .decorative-circle {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.03;
+            z-index: 0;
+        }
+
+        .circle-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: -200px;
+            right: -100px;
+        }
+
+        .circle-2 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #f4c542, #e8b429);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        /* Header */
         .header {
-            background: linear-gradient(180deg, #fef5e7 0%, #f8ead3 100%);
-            padding: 15px 30px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid #e8d5b7;
+            position: relative;
+            z-index: 10;
+            background: #ffffff;
+            padding: 16px 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid #e8ecf1;
         }
 
         .header-content {
@@ -44,43 +70,49 @@
 
         .logo-1c {
             width: 65px;
-            height: 40px;
+            height: 48px;
             background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
-            border-radius: 5px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: white;
-            font-size: 1.2em;
-            box-shadow: 0 2px 6px rgba(244, 197, 66, 0.4);
+            font-weight: 800;
+            color: #2d3748;
+            font-size: 1.3em;
+            box-shadow: 0 4px 12px rgba(244, 197, 66, 0.25);
+            letter-spacing: 1px;
         }
 
         .system-name {
-            font-size: 0.95em;
-            color: #5d4e37;
+            font-size: 1em;
+            color: #2d3748;
+            font-weight: 600;
         }
 
         .logout-btn {
-            background: linear-gradient(180deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
             border: none;
             padding: 10px 24px;
-            border-radius: 5px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             font-size: 0.85em;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(244, 197, 66, 0.3);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
         }
 
         .logout-btn:hover {
-            background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
         }
 
+        /* Main Content */
         .main-content {
+            position: relative;
+            z-index: 10;
             flex: 1;
             display: flex;
             justify-content: center;
@@ -89,14 +121,38 @@
         }
 
         .content-box {
-            background: white;
+            background: #ffffff;
             padding: 60px 50px;
-            border-radius: 6px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             text-align: center;
             max-width: 700px;
             width: 100%;
-            border-top: 3px solid #f4c542;
+            border: 1px solid #e8ecf1;
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+        }
+
+        .content-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 16px 16px 0 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .icon-wrapper {
@@ -105,66 +161,109 @@
 
         .main-icon {
             font-size: 5em;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         h1 {
-            color: #5d4e37;
+            color: #2d3748;
             font-size: 2.2em;
             margin-bottom: 20px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .status-badge {
-            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
-            color: #5d4e37;
-            padding: 12px 30px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            padding: 12px 32px;
+            border-radius: 10px;
             display: inline-block;
             font-weight: 700;
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 0.9em;
-            box-shadow: 0 3px 10px rgba(244, 197, 66, 0.4);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
         }
 
         .message {
-            color: #5d4e37;
+            color: #4a5568;
             font-size: 1.15em;
             line-height: 1.8;
             margin-bottom: 35px;
         }
 
         .info-box {
-            background: #fefcf8;
-            border: 2px solid #e8d5b7;
-            border-radius: 6px;
-            padding: 25px;
-            margin-bottom: 25px;
+            background: #f7fafc;
+            border: 2px solid #e8ecf1;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 28px;
+            border-left: 4px solid #667eea;
         }
 
         .info-box p {
-            color: #5d4e37;
+            color: #4a5568;
             font-size: 0.95em;
             line-height: 1.7;
         }
 
         .info-box strong {
-            color: #2d8659;
+            color: #667eea;
+            font-weight: 700;
         }
 
+        /* Footer */
         .footer {
-            background: #fef5e7;
-            padding: 18px;
+            position: relative;
+            z-index: 10;
+            background: #ffffff;
+            padding: 20px;
             text-align: center;
-            color: #8b7d6b;
-            font-size: 0.85em;
-            border-top: 1px solid #e8d5b7;
+            color: #718096;
+            font-size: 0.9em;
+            border-top: 1px solid #e8ecf1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-box {
+                padding: 45px 35px;
+                margin: 20px;
+            }
+
+            .header {
+                padding: 14px 20px;
+            }
+
+            .system-name {
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .main-icon {
+                font-size: 4em;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+
     <div class="header">
         <div class="header-content">
             <div class="logo-section">
