@@ -356,10 +356,23 @@
 
         .comment-section-with-save {
             display: block;
+            opacity: 1;
+            max-height: 500px;
+            overflow: hidden;
+            transition: all 0.6s ease;
         }
 
         .comment-section-with-save.hidden {
-            display: none;
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .comment-section-with-save.fade-out {
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(-20px);
         }
 
         .save-comment-section {
@@ -388,15 +401,32 @@
             background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
         }
 
-        .comment-saved-msg {
-            color: #2d8659;
-            font-size: 0.9em;
-            font-weight: 600;
-            display: none;
+        .comment-saved-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: #e8f5e9;
+            border-radius: 6px;
+            border-left: 3px solid #2d8659;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s ease;
         }
 
-        .comment-saved-msg.show {
-            display: block;
+        .comment-saved-indicator.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .comment-saved-indicator .icon {
+            font-size: 1.5em;
+            color: #2d8659;
+        }
+
+        .comment-saved-indicator .text {
+            color: #2d8659;
+            font-weight: 600;
         }
 
         .modal-buttons {
@@ -439,7 +469,6 @@
             background: linear-gradient(180deg, #e8b429 0%, #d4a428 100%);
         }
 
-        /* View Modal */
         .view-modal {
             max-width: 900px;
         }
@@ -569,31 +598,6 @@
             flex: 1;
         }
 
-        @media (max-width: 968px) {
-            body {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .view-modal-content {
-                grid-template-columns: 1fr;
-            }
-
-            .comments-section {
-                border-right: none;
-                border-bottom: 2px solid #e8d5b7;
-                padding-right: 0;
-                padding-bottom: 30px;
-            }
-
-/* Beautiful Notifications */
         .notification-container {
             position: fixed;
             top: 30px;
@@ -659,11 +663,36 @@
             color: #8b7d6b;
             font-size: 0.9em;
         }
-    }
+
+        @media (max-width: 968px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .view-modal-content {
+                grid-template-columns: 1fr;
+            }
+
+            .comments-section {
+                border-right: none;
+                border-bottom: 2px solid #e8d5b7;
+                padding-right: 0;
+                padding-bottom: 30px;
+            }
+        }
     </style>
 </head>
 <body>
-     <div class="notification-container" id="notificationContainer"></div>
+    <div class="notification-container" id="notificationContainer"></div>
+
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="logo-section">
@@ -755,7 +784,6 @@
         </div>
     </div>
 
-    <!-- Add/Edit Modal -->
     <div class="modal-overlay" id="formModal">
         <div class="modal">
             <h2 id="modalTitle">Add New Estimate</h2>
@@ -807,21 +835,26 @@
                         <label for="comment">Comment</label>
                         <textarea id="comment" placeholder="Enter comment (optional)"></textarea>
                         <div class="save-comment-section">
-                            <button type="button" class="save-comment-btn" onclick="saveInitialComment()">Save Comment</button>
-                            <span class="comment-saved-msg" id="commentSavedMsg">✓ Comment saved</span>
+                            <button type="button" class="save-comment-btn" onclick="saveCommentTemp()">Save Comment</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width" id="commentSavedIndicator" style="display: none;">
+                        <div class="comment-saved-indicator">
+                            <span class="icon">✓</span>
+                            <span class="text">Comment saved and will be added with estimate</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn cancel-btn" onclick="closeFormModal()">Close</button>
-                    <button type="submit" class="modal-btn save-btn" id="saveBtn">Save</button>
+                    <button type="button" class="modal-btn cancel-btn" onclick="closeFormModal()">Cancel</button>
+                    <button type="submit" class="modal-btn save-btn">Save</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- View Modal -->
     <div class="modal-overlay" id="viewModal">
         <div class="modal view-modal">
             <h2>Estimate Details</h2>
@@ -864,12 +897,12 @@
         </div>
     </div>
 
-   <script>
+    <script>
         let editingEstimateId = null;
         let currentViewEstimateId = null;
         let estimatesData = [];
+        let pendingComment = null; // Временное хранилище для комментария
 
-        // Beautiful notification system
         function showNotification(message, type = 'info', title = '') {
             const container = document.getElementById('notificationContainer');
             const notification = document.createElement('div');
@@ -939,10 +972,13 @@
 
         function openAddModal() {
             editingEstimateId = null;
+            pendingComment = null;
+            
             const modal = document.getElementById('formModal');
             const modalTitle = document.getElementById('modalTitle');
             const commentSection = document.getElementById('commentSection');
             const form = document.getElementById('estimateForm');
+            const indicator = document.getElementById('commentSavedIndicator');
             
             if (modalTitle) {
                 modalTitle.textContent = 'Add New Estimate';
@@ -950,6 +986,15 @@
             
             if (commentSection) {
                 commentSection.classList.remove('hidden');
+                commentSection.classList.remove('fade-out');
+            }
+            
+            if (indicator) {
+                indicator.style.display = 'none';
+                const indElement = indicator.querySelector('.comment-saved-indicator');
+                if (indElement) {
+                    indElement.classList.remove('show');
+                }
             }
             
             if (form) {
@@ -961,7 +1006,6 @@
             }
             
             document.getElementById('date').valueAsDate = new Date();
-            document.getElementById('commentSavedMsg').classList.remove('show');
         }
 
         function openEditModal(estimateId) {
@@ -969,9 +1013,12 @@
             if (!estimate) return;
 
             editingEstimateId = estimate.id;
+            pendingComment = null;
+            
             const modal = document.getElementById('formModal');
             const modalTitle = document.getElementById('modalTitle');
             const commentSection = document.getElementById('commentSection');
+            const indicator = document.getElementById('commentSavedIndicator');
             
             if (modalTitle) {
                 modalTitle.textContent = 'Edit Estimate';
@@ -979,6 +1026,10 @@
             
             if (commentSection) {
                 commentSection.classList.add('hidden');
+            }
+            
+            if (indicator) {
+                indicator.style.display = 'none';
             }
             
             document.getElementById('date').value = estimate.date;
@@ -994,9 +1045,12 @@
 
         function closeFormModal() {
             editingEstimateId = null;
+            pendingComment = null;
+            
             const modal = document.getElementById('formModal');
             const form = document.getElementById('estimateForm');
             const commentSection = document.getElementById('commentSection');
+            const indicator = document.getElementById('commentSavedIndicator');
             
             if (modal) {
                 modal.classList.remove('active');
@@ -1006,50 +1060,45 @@
             }
             if (commentSection) {
                 commentSection.classList.remove('hidden');
+                commentSection.classList.remove('fade-out');
+            }
+            if (indicator) {
+                indicator.style.display = 'none';
+                const indElement = indicator.querySelector('.comment-saved-indicator');
+                if (indElement) {
+                    indElement.classList.remove('show');
+                }
             }
         }
 
-        async function saveInitialComment() {
-            if (!editingEstimateId) {
-                showNotification('Please save the estimate first before adding comments', 'warning');
-                return;
-            }
-
+        function saveCommentTemp() {
             const commentText = document.getElementById('comment').value;
+            
             if (!commentText.trim()) {
                 showNotification('Please enter a comment', 'warning');
                 return;
             }
 
-            try {
-                const response = await fetch('/api/comments/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        estimate_id: editingEstimateId,
-                        comment_text: commentText
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    document.getElementById('comment').value = '';
-                    const msg = document.getElementById('commentSavedMsg');
-                    msg.classList.add('show');
-                    showNotification('Comment saved successfully!', 'success');
-                    setTimeout(() => {
-                        msg.classList.remove('show');
-                    }, 3000);
-                } else {
-                    showNotification('Failed to save comment', 'error');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showNotification('Error saving comment. Please try again.', 'error');
-            }
+            pendingComment = commentText;
+            
+            const commentSection = document.getElementById('commentSection');
+            const indicator = document.getElementById('commentSavedIndicator');
+            
+            commentSection.classList.add('fade-out');
+            
+            setTimeout(() => {
+                commentSection.style.display = 'none';
+                indicator.style.display = 'block';
+                
+                setTimeout(() => {
+                    const indElement = indicator.querySelector('.comment-saved-indicator');
+                    if (indElement) {
+                        indElement.classList.add('show');
+                    }
+                }, 50);
+            }, 600);
+            
+            showNotification('Comment prepared. Click Save to create estimate with comment.', 'success');
         }
 
         async function openViewModal(estimateId) {
@@ -1197,12 +1246,11 @@
                 resource: document.getElementById('resource').value,
                 technician: document.getElementById('technician').value,
                 client: document.getElementById('client').value,
-                comment: document.getElementById('comment').value
+                comment: ''
             };
 
             try {
                 let response;
-                const isNewEstimate = !editingEstimateId;
                 
                 if (editingEstimateId) {
                     estimateData.id = editingEstimateId;
@@ -1226,23 +1274,38 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    if (isNewEstimate) {
-                        editingEstimateId = data.data.id;
-                        
-                        const modalTitle = document.getElementById('modalTitle');
-                        if (modalTitle) {
-                            modalTitle.textContent = 'Estimate Created - Add Comments';
+                    const newEstimateId = data.data.id;
+                    
+                    if (pendingComment && !editingEstimateId) {
+                        try {
+                            const commentResponse = await fetch('/api/comments/add', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    estimate_id: newEstimateId,
+                                    comment_text: pendingComment
+                                })
+                            });
+                            
+                            const commentData = await commentResponse.json();
+                            
+                            if (commentData.success) {
+                                showNotification('Estimate and comment created successfully!', 'success');
+                            } else {
+                                showNotification('Estimate created, but comment failed to save', 'warning');
+                            }
+                        } catch (error) {
+                            console.error('Comment error:', error);
+                            showNotification('Estimate created, but comment failed to save', 'warning');
                         }
-                        
-                        showNotification('Estimate created successfully! You can now add comments.', 'success');
-                        
-                        document.getElementById('comment').value = '';
-                        loadEstimates();
                     } else {
-                        closeFormModal();
-                        loadEstimates();
-                        showNotification('Estimate updated successfully!', 'success');
+                        showNotification(editingEstimateId ? 'Estimate updated successfully!' : 'Estimate created successfully!', 'success');
                     }
+                    
+                    closeFormModal();
+                    loadEstimates();
                 } else {
                     showNotification(data.error || 'Failed to save estimate', 'error');
                 }
