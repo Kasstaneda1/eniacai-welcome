@@ -325,18 +325,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(26, 26, 46, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(26, 26, 46, 0);
+            backdrop-filter: blur(0px);
             z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s ease, backdrop-filter 0.5s ease;
         }
 
         .modal-overlay.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 1;
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(8px);
         }
 
         .modal {
@@ -655,13 +654,28 @@
 
     <script>
         function openModal() {
-            document.getElementById('modalOverlay').classList.add('active');
+            const modal = document.getElementById('modalOverlay');
+            modal.style.display = 'flex';
             document.getElementById('password').value = '';
-            setTimeout(() => document.getElementById('password').focus(), 300);
+            
+            // Даём браузеру время на reflow перед добавлением класса active
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add('active');
+                });
+            });
+            
+            setTimeout(() => document.getElementById('password').focus(), 550);
         }
 
         function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            
+            // Убираем display после завершения анимации
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 500);
         }
 
         function closeModalOnOverlay(event) {
