@@ -19,9 +19,12 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ success: false, error: 'Missing required fields' });
     }
 
+    // Маппинг: Sold → Search
+    const statusToSave = status === 'sold' ? 'search' : status;
+
     const result = await query(
       'UPDATE estimates SET status = $1 WHERE id = $2 RETURNING *',
-      [status, id]
+      [statusToSave, id]
     );
 
     if (result.rows.length === 0) {

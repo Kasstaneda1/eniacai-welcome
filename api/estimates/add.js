@@ -22,7 +22,7 @@ module.exports = async function handler(req, res) {
     const result = await query(
       `INSERT INTO estimates (date, manager, resource, technician, client, comment, status)
        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [date, manager, resource, technician, client, comment || '', 'pending']
+      [date, manager, resource, technician, client, comment || '', 'diagnostic']
     );
 
     return res.status(201).json({ success: true, data: result.rows[0] });

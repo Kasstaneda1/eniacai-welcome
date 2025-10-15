@@ -600,6 +600,55 @@
             flex: 1;
         }
 
+        .status-option.blurred {
+            opacity: 0.3;
+            filter: blur(2px);
+            transition: all 0.3s ease;
+        }
+
+        .status-option input[type="checkbox"]:checked ~ label {
+            color: #2d8659;
+            font-weight: 700;
+        }
+
+        /* Row colors by status */
+        tbody tr.status-sold {
+            background: #e8f5e9 !important;
+        }
+
+        tbody tr.status-sold:hover {
+            background: #d4edda !important;
+        }
+
+        tbody tr.status-thinking {
+            background: #e3f2fd !important;
+        }
+
+        tbody tr.status-thinking:hover {
+            background: #bbdefb !important;
+        }
+
+        tbody tr.status-no_answer {
+            background: #f5f5f5 !important;
+        }
+
+        tbody tr.status-no_answer:hover {
+            background: #eeeeee !important;
+        }
+
+        tbody tr.status-rejected {
+            background: #e0f7f8 !important;
+        }
+
+        tbody tr.status-rejected:hover {
+            background: #b2ebf2 !important;
+        }
+
+        tbody tr.status-rejected td {
+            text-decoration: line-through;
+            color: #46bdc6;
+        }
+
         .notification-container {
             position: fixed;
             top: 30px;
@@ -873,21 +922,20 @@
 
                 <div class="status-section">
                     <h3>Status</h3>
-                    <div class="status-options">
-                        <div class="status-option">
-                            <input type="checkbox" id="statusNoAnswer" value="no_answer">
+                    <div class="status-option">
+                            <input type="checkbox" id="statusNoAnswer" value="no_answer" onchange="updateStatus(this)">
                             <label for="statusNoAnswer">No Answer</label>
                         </div>
                         <div class="status-option">
-                            <input type="checkbox" id="statusThinking" value="thinking">
+                            <input type="checkbox" id="statusThinking" value="thinking" onchange="updateStatus(this)">
                             <label for="statusThinking">Thinking</label>
                         </div>
                         <div class="status-option">
-                            <input type="checkbox" id="statusSold" value="sold">
+                            <input type="checkbox" id="statusSold" value="sold" onchange="updateStatus(this)">
                             <label for="statusSold">Sold</label>
                         </div>
                         <div class="status-option">
-                            <input type="checkbox" id="statusRejected" value="rejected">
+                            <input type="checkbox" id="statusRejected" value="rejected" onchange="updateStatus(this)">
                             <label for="statusRejected">Rejected</label>
                         </div>
                     </div>
@@ -1124,9 +1172,71 @@
 
             await loadComments(estimateId);
             
+            // Load current status
+            const estimate = estimatesData.find(e => e.id === estimateId);
+            if (estimate) {
+                loadCurrentStatus(estimate.status);
+            }
+        }
+
+        function loadCurrentStatus(status) {
             document.querySelectorAll('.status-option input').forEach(cb => {
-                cb.checked = false;
+                // Маппинг: search → sold для отображения
+                const checkValue = status === 'search' ? 'sold' : status;
+                cb.checked = (cb.value === checkValue);
+                
+                if (cb.checked) {
+                    cb.parentElement.classList.remove('blurred');
+                } else {
+                    cb.parentElement.classList.add('blurred');
+                }
             });
+        }
+
+        async function updateStatus(checkbox) {
+            // Убираем blur у всех
+            document.querySelectorAll('.status-option').forEach(opt => {
+                opt.classList.remove('blurred');
+            });
+
+            // Снимаем все галочки кроме текущей
+            document.querySelectorAll('.status-option input').forEach(cb => {
+                if (cb !== checkbox) {
+                    cb.checked = false;
+                    cb.parentElement.classList.add('blurred'); // Blur для не выбранных
+                }
+            });
+
+            if (checkbox.checked) {
+                checkbox.parentElement.classList.remove('blurred');
+            }
+
+            const newStatus = checkbox.checked ? checkbox.value : 'diagnostic';
+
+            try {
+                const response = await fetch('/api/estimates/update-status', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: currentViewEstimateId,
+                        status: newStatus
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    loadEstimates();
+                    showNotification('Status updated successfully!', 'success');
+                } else {
+                    showNotification('Error updating status', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error updating status. Please try again.', 'error');
+            }
         }
 
         function closeViewModal() {
@@ -1229,8 +1339,10 @@
 
                 estimatesData = data.data;
 
-                tbody.innerHTML = data.data.map(est => `
-                    <tr onclick="openEditModal(${est.id})">
+                tbody.innerHTML = data.data.map(est => {
+                    const statusClass = `status-${est.status.replace('_', '-')}`;
+                    return `
+                    <tr class="${statusClass}" onclick="openEditModal(${est.id})">
                         <td>${formatDate(est.date)}</td>
                         <td>${est.manager}</td>
                         <td>${est.resource}</td>
@@ -1242,12 +1354,25 @@
                         <td>-</td>
                         <td>-</td>
                         <td><button class="action-btn" onclick="event.stopPropagation(); openViewModal(${est.id})">View</button></td>
-                        <td>${est.status}</td>
+                        <td>${getStatusLabel(est.status)}</td>
                     </tr>
-                `).join('');
+                `;
+                }).join('');
             } catch (error) {
                 console.error('Error loading estimates:', error);
             }
+        }
+
+function getStatusLabel(status) {
+            const labels = {
+                'diagnostic': 'Diagnostic',
+                'no_answer': 'No Answer',
+                'thinking': 'Thinking',
+                'sold': 'Sold',
+                'search': 'Search',
+                'rejected': 'Rejected'
+            };
+            return labels[status] || status;
         }
 
         async function handleFormSubmit(e) {
