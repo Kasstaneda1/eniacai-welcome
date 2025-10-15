@@ -746,8 +746,8 @@
                 </div>
 
                 <div class="modal-buttons">
-                    <button type="button" class="modal-btn cancel-btn" onclick="closeFormModal()">Cancel</button>
-                    <button type="submit" class="modal-btn save-btn">Save</button>
+                    <button type="button" class="modal-btn cancel-btn" onclick="closeFormModal()">Close</button>
+                    <button type="submit" class="modal-btn save-btn" id="saveBtn">Save</button>
                 </div>
             </form>
         </div>
@@ -1094,8 +1094,10 @@
 
             try {
                 let response;
+                const isNewEstimate = !editingEstimateId;
                 
                 if (editingEstimateId) {
+                    // Update existing
                     estimateData.id = editingEstimateId;
                     response = await fetch('/api/estimates/update', {
                         method: 'PUT',
@@ -1105,6 +1107,7 @@
                         body: JSON.stringify(estimateData)
                     });
                 } else {
+                    // Create new
                     response = await fetch('/api/estimates/add', {
                         method: 'POST',
                         headers: {
@@ -1117,11 +1120,29 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    if (!editingEstimateId) {
+                    if (isNewEstimate) {
+                        // New estimate created - keep modal open for comments
                         editingEstimateId = data.data.id;
+                        
+                        // Change title to Edit
+                        const modalTitle = document.getElementById('modalTitle');
+                        if (modalTitle) {
+                            modalTitle.textContent = 'Estimate Created - Add Comments';
+                        }
+                        
+                        // Show success message
+                        alert('Estimate created successfully! You can now add comments.');
+                        
+                        // Clear the comment field
+                        document.getElementById('comment').value = '';
+                        
+                        // Reload table in background
+                        loadEstimates();
+                    } else {
+                        // Updated existing - close modal
+                        closeFormModal();
+                        loadEstimates();
                     }
-                    closeFormModal();
-                    loadEstimates();
                 } else {
                     alert('Error: ' + (data.error || 'Failed to save estimate'));
                 }
