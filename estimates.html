@@ -592,10 +592,78 @@
                 padding-right: 0;
                 padding-bottom: 30px;
             }
+
+/* Beautiful Notifications */
+        .notification-container {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
         }
+
+        .notification {
+            background: white;
+            padding: 18px 30px;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 350px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: auto;
+            border-left: 4px solid #f4c542;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.success {
+            border-left-color: #2d8659;
+        }
+
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+
+        .notification.info {
+            border-left-color: #6ba3d0;
+        }
+
+        .notification-icon {
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 700;
+            color: #5d4e37;
+            margin-bottom: 4px;
+            font-size: 1em;
+        }
+
+        .notification-message {
+            color: #8b7d6b;
+            font-size: 0.9em;
+        }
+    }
     </style>
 </head>
 <body>
+     <div class="notification-container" id="notificationContainer"></div>
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="logo-section">
@@ -799,7 +867,49 @@
    <script>
         let editingEstimateId = null;
         let currentViewEstimateId = null;
-        let estimatesData = []; // Храним данные здесь
+        let estimatesData = [];
+
+        // Beautiful notification system
+        function showNotification(message, type = 'info', title = '') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icons = {
+                success: '✓',
+                error: '⚠',
+                info: 'ℹ',
+                warning: '⚡'
+            };
+
+            const titles = {
+                success: title || 'Success',
+                error: title || 'Error',
+                info: title || 'Info',
+                warning: title || 'Warning'
+            };
+
+            notification.innerHTML = `
+                <div class="notification-icon">${icons[type] || icons.info}</div>
+                <div class="notification-content">
+                    <div class="notification-title">${titles[type]}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+            `;
+
+            container.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             if (!sessionStorage.getItem('authToken')) {
@@ -901,13 +1011,13 @@
 
         async function saveInitialComment() {
             if (!editingEstimateId) {
-                alert('Please save the estimate first before adding comments');
+                showNotification('Please save the estimate first before adding comments', 'warning');
                 return;
             }
 
             const commentText = document.getElementById('comment').value;
             if (!commentText.trim()) {
-                alert('Please enter a comment');
+                showNotification('Please enter a comment', 'warning');
                 return;
             }
 
@@ -929,21 +1039,20 @@
                     document.getElementById('comment').value = '';
                     const msg = document.getElementById('commentSavedMsg');
                     msg.classList.add('show');
+                    showNotification('Comment saved successfully!', 'success');
                     setTimeout(() => {
                         msg.classList.remove('show');
                     }, 3000);
                 } else {
-                    alert('Error saving comment');
+                    showNotification('Failed to save comment', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error saving comment');
+                showNotification('Error saving comment. Please try again.', 'error');
             }
         }
 
         async function openViewModal(estimateId) {
-            console.log('Opening view modal for ID:', estimateId); // Для отладки
-            
             currentViewEstimateId = estimateId;
             const modal = document.getElementById('viewModal');
             
@@ -953,7 +1062,6 @@
 
             await loadComments(estimateId);
             
-            // Сбросить чекбоксы
             document.querySelectorAll('.status-option input').forEach(cb => {
                 cb.checked = false;
             });
@@ -996,7 +1104,7 @@
             const commentText = document.getElementById('newComment').value;
             
             if (!commentText.trim()) {
-                alert('Please enter a comment');
+                showNotification('Please enter a comment', 'warning');
                 return;
             }
 
@@ -1017,12 +1125,13 @@
                 if (data.success) {
                     document.getElementById('newComment').value = '';
                     await loadComments(currentViewEstimateId);
+                    showNotification('Comment added successfully!', 'success');
                 } else {
-                    alert('Error adding comment');
+                    showNotification('Failed to add comment', 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error adding comment');
+                showNotification('Error adding comment. Please try again.', 'error');
             }
         }
 
@@ -1056,7 +1165,6 @@
                     return;
                 }
 
-                // Сохраняем данные глобально
                 estimatesData = data.data;
 
                 tbody.innerHTML = data.data.map(est => `
@@ -1097,7 +1205,6 @@
                 const isNewEstimate = !editingEstimateId;
                 
                 if (editingEstimateId) {
-                    // Update existing
                     estimateData.id = editingEstimateId;
                     response = await fetch('/api/estimates/update', {
                         method: 'PUT',
@@ -1107,7 +1214,6 @@
                         body: JSON.stringify(estimateData)
                     });
                 } else {
-                    // Create new
                     response = await fetch('/api/estimates/add', {
                         method: 'POST',
                         headers: {
@@ -1121,34 +1227,28 @@
 
                 if (data.success) {
                     if (isNewEstimate) {
-                        // New estimate created - keep modal open for comments
                         editingEstimateId = data.data.id;
                         
-                        // Change title to Edit
                         const modalTitle = document.getElementById('modalTitle');
                         if (modalTitle) {
                             modalTitle.textContent = 'Estimate Created - Add Comments';
                         }
                         
-                        // Show success message
-                        alert('Estimate created successfully! You can now add comments.');
+                        showNotification('Estimate created successfully! You can now add comments.', 'success');
                         
-                        // Clear the comment field
                         document.getElementById('comment').value = '';
-                        
-                        // Reload table in background
                         loadEstimates();
                     } else {
-                        // Updated existing - close modal
                         closeFormModal();
                         loadEstimates();
+                        showNotification('Estimate updated successfully!', 'success');
                     }
                 } else {
-                    alert('Error: ' + (data.error || 'Failed to save estimate'));
+                    showNotification(data.error || 'Failed to save estimate', 'error');
                 }
             } catch (error) {
                 console.error('Error saving estimate:', error);
-                alert('Error saving estimate. Please try again.');
+                showNotification('Error saving estimate. Please try again.', 'error');
             }
         }
     </script>
