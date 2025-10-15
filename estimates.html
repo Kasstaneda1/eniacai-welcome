@@ -984,11 +984,16 @@
                 modalTitle.textContent = 'Add New Estimate';
             }
             
+            // ВАЖНО: Сбрасываем ВСЕ состояния комментария
             if (commentSection) {
                 commentSection.classList.remove('hidden');
                 commentSection.classList.remove('fade-out');
+                commentSection.style.display = 'block'; // Восстанавливаем display
+                commentSection.style.opacity = '1'; // Восстанавливаем opacity
+                commentSection.style.maxHeight = '500px'; // Восстанавливаем height
             }
             
+            // Скрываем индикатор
             if (indicator) {
                 indicator.style.display = 'none';
                 const indElement = indicator.querySelector('.comment-saved-indicator');
@@ -1058,10 +1063,16 @@
             if (form) {
                 form.reset();
             }
+            
+            // ВАЖНО: Полностью сбрасываем комментарий при закрытии
             if (commentSection) {
                 commentSection.classList.remove('hidden');
                 commentSection.classList.remove('fade-out');
+                commentSection.style.display = 'block';
+                commentSection.style.opacity = '1';
+                commentSection.style.maxHeight = '500px';
             }
+            
             if (indicator) {
                 indicator.style.display = 'none';
                 const indElement = indicator.querySelector('.comment-saved-indicator');
