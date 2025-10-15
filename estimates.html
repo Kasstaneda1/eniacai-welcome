@@ -796,9 +796,10 @@
         </div>
     </div>
 
-    <script>
+   <script>
         let editingEstimateId = null;
         let currentViewEstimateId = null;
+        let estimatesData = []; // Храним данные здесь
 
         document.addEventListener('DOMContentLoaded', function() {
             if (!sessionStorage.getItem('authToken')) {
@@ -853,7 +854,10 @@
             document.getElementById('commentSavedMsg').classList.remove('show');
         }
 
-        function openEditModal(estimate) {
+        function openEditModal(estimateId) {
+            const estimate = estimatesData.find(e => e.id === estimateId);
+            if (!estimate) return;
+
             editingEstimateId = estimate.id;
             const modal = document.getElementById('formModal');
             const modalTitle = document.getElementById('modalTitle');
@@ -937,16 +941,19 @@
             }
         }
 
-        async function openViewModal(estimate) {
-            currentViewEstimateId = estimate.id;
+        async function openViewModal(estimateId) {
+            console.log('Opening view modal for ID:', estimateId); // Для отладки
+            
+            currentViewEstimateId = estimateId;
             const modal = document.getElementById('viewModal');
             
             if (modal) {
                 modal.classList.add('active');
             }
 
-            await loadComments(estimate.id);
+            await loadComments(estimateId);
             
+            // Сбросить чекбоксы
             document.querySelectorAll('.status-option input').forEach(cb => {
                 cb.checked = false;
             });
@@ -981,6 +988,7 @@
                 `).join('');
             } catch (error) {
                 console.error('Error loading comments:', error);
+                commentsList.innerHTML = '<div class="no-comments">Error loading comments</div>';
             }
         }
 
@@ -1048,8 +1056,11 @@
                     return;
                 }
 
+                // Сохраняем данные глобально
+                estimatesData = data.data;
+
                 tbody.innerHTML = data.data.map(est => `
-                    <tr onclick='openEditModal(${JSON.stringify(est).replace(/'/g, "&apos;")})'>
+                    <tr onclick="openEditModal(${est.id})">
                         <td>${formatDate(est.date)}</td>
                         <td>${est.manager}</td>
                         <td>${est.resource}</td>
@@ -1060,7 +1071,7 @@
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
-                        <td><button class="action-btn" onclick="event.stopPropagation(); openViewModal(${JSON.stringify(est).replace(/'/g, '&apos;')})">View</button></td>
+                        <td><button class="action-btn" onclick="event.stopPropagation(); openViewModal(${est.id})">View</button></td>
                         <td>${est.status}</td>
                     </tr>
                 `).join('');
