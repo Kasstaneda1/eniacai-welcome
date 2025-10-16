@@ -57,6 +57,75 @@
             box-shadow: 0 6px 16px rgba(244, 197, 66, 0.35);
         }
 
+        /* Logo Animation */
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-bar {
+            transform-origin: center;
+            animation-duration: 0.6s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .logo-bar-top {
+            animation-name: slideTop;
+            animation-delay: 0s;
+        }
+
+        .logo-bar-right {
+            animation-name: slideRight;
+            animation-delay: 0.3s;
+        }
+
+        .logo-bar-bottom {
+            animation-name: slideBottom;
+            animation-delay: 0.6s;
+        }
+
+        .logo-bar-left {
+            animation-name: slideLeft;
+            animation-delay: 0.9s;
+        }
+
+        @keyframes slideTop {
+            0%, 25%, 100% {
+                transform: translate(0, 0);
+            }
+            12.5% {
+                transform: translate(-3px, -3px);
+            }
+        }
+
+        @keyframes slideRight {
+            0%, 25%, 100% {
+                transform: translate(0, 0);
+            }
+            12.5% {
+                transform: translate(3px, -3px);
+            }
+        }
+
+        @keyframes slideBottom {
+            0%, 25%, 100% {
+                transform: translate(0, 0);
+            }
+            12.5% {
+                transform: translate(3px, 3px);
+            }
+        }
+
+        @keyframes slideLeft {
+            0%, 25%, 100% {
+                transform: translate(0, 0);
+            }
+            12.5% {
+                transform: translate(-3px, 3px);
+            }
+        }
+
         .system-title {
             color: #2d3748;
             font-size: 1.05em;
