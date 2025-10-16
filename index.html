@@ -39,7 +39,7 @@
         .logo-1c {
             width: 65px;
             height: 48px;
-            background: linear-gradient(135deg, #f4c542 0%, #e8b429 100%);
+            background: transparent;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -47,14 +47,12 @@
             font-weight: 800;
             color: #2d3748;
             font-size: 1.3em;
-            box-shadow: 0 4px 12px rgba(244, 197, 66, 0.25);
             letter-spacing: 1px;
             transition: all 0.3s ease;
         }
 
         .logo-1c:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(244, 197, 66, 0.35);
         }
 
         /* Logo Animation */
@@ -65,8 +63,8 @@
 
         .logo-bar {
             transform-origin: center;
-            animation-duration: 0.6s;
-            animation-timing-function: ease-in-out;
+            animation-duration: 1.5s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             animation-iteration-count: infinite;
         }
 
@@ -77,52 +75,64 @@
 
         .logo-bar-right {
             animation-name: slideRight;
-            animation-delay: 0.3s;
+            animation-delay: 0.375s;
         }
 
         .logo-bar-bottom {
             animation-name: slideBottom;
-            animation-delay: 0.6s;
+            animation-delay: 0.75s;
         }
 
         .logo-bar-left {
             animation-name: slideLeft;
-            animation-delay: 0.9s;
+            animation-delay: 1.125s;
         }
 
         @keyframes slideTop {
-            0%, 25%, 100% {
+            0%, 100% {
                 transform: translate(0, 0);
             }
-            12.5% {
-                transform: translate(-3px, -3px);
+            16.67% {
+                transform: translate(-5px, -5px);
+            }
+            33.33% {
+                transform: translate(0, 0);
             }
         }
 
         @keyframes slideRight {
-            0%, 25%, 100% {
+            0%, 100% {
                 transform: translate(0, 0);
             }
-            12.5% {
-                transform: translate(3px, -3px);
+            16.67% {
+                transform: translate(5px, -5px);
+            }
+            33.33% {
+                transform: translate(0, 0);
             }
         }
 
         @keyframes slideBottom {
-            0%, 25%, 100% {
+            0%, 100% {
                 transform: translate(0, 0);
             }
-            12.5% {
-                transform: translate(3px, 3px);
+            16.67% {
+                transform: translate(5px, 5px);
+            }
+            33.33% {
+                transform: translate(0, 0);
             }
         }
 
         @keyframes slideLeft {
-            0%, 25%, 100% {
+            0%, 100% {
                 transform: translate(0, 0);
             }
-            12.5% {
-                transform: translate(-3px, 3px);
+            16.67% {
+                transform: translate(-5px, 5px);
+            }
+            33.33% {
+                transform: translate(0, 0);
             }
         }
 
