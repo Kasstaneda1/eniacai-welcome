@@ -4,8 +4,14 @@ let pool;
 
 function getPool() {
   if (!pool) {
+    const connectionString = process.env.DATABASE_URL || process.env.DATABASE_PUBLIC_URL;
+    
+    if (!connectionString) {
+      throw new Error('DATABASE_URL or DATABASE_PUBLIC_URL not found in environment variables');
+    }
+
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: connectionString,
       ssl: {
         rejectUnauthorized: false
       }
