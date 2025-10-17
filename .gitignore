@@ -1,0 +1,14 @@
+# .gitignore
+
+# Environment variables
+.env
+.env.example
+
+# Dependencies
+node_modules/
+
+# Database migration scripts (не нужны в production)
+db/
+
+# Logs
+*.log

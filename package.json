@@ -1,7 +1,29 @@
 {
-    "name": "eniacai-welcome",
-    "version": "1.0.0",
-    "dependencies": {
-      "pg": "^8.11.3"
-    }
-  }
+  "name": "eniacai-welcome",
+  "version": "2.0.0",
+  "description": "ENIAC AI Enterprise Management System with User Authentication",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node db/migrate.js",
+    "hash": "node db/generate-hash.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "management",
+    "crm",
+    "estimates",
+    "authentication",
+    "jwt"
+  ],
+  "author": "ENIAC AI",
+  "license": "ISC"
+}
