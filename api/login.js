@@ -23,6 +23,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const { username, password } = req.body;
+    console.log('Login attempt:', { username, password }); // ВРЕМЕННО для дебага
 
     // Validate input
     if (!username || !password) {
