@@ -1456,11 +1456,11 @@
                 try {
                     const response = await fetch('/api/estimates/update-status', {
                         method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            id: currentViewEstimateId,
-                            status: 'diagnostic'
-                        })
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                        },
+                        body: JSON.stringify({ id: currentViewEstimateId, status: 'diagnostic' })
                     });
 
                     const data = await response.json();
@@ -1470,6 +1470,7 @@
                     }
                 } catch (error) {
                     console.error('Error:', error);
+                    showNotification('Error resetting status', 'error');
                 }
                 return;
             }
@@ -1492,7 +1493,10 @@
             try {
                 const response = await fetch('/api/estimates/update-status', {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    },
                     body: JSON.stringify({
                         id: currentViewEstimateId,
                         status: newStatus
@@ -1525,7 +1529,11 @@
 
         async function loadComments(estimateId) {
             try {
-                const response = await fetch(`/api/comments/list?estimate_id=${estimateId}`);
+                const response = await fetch(`/api/comments/list?estimate_id=${estimateId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    }
+                });
                 const data = await response.json();
 
                 const commentsList = document.getElementById('commentsList');
@@ -1558,11 +1566,11 @@
             try {
                 const response = await fetch('/api/comments/add', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        estimate_id: currentViewEstimateId,
-                        comment_text: commentText
-                    })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({ estimate_id: currentViewEstimateId, comment_text: commentText })
                 });
 
                 const data = await response.json();
@@ -1581,11 +1589,19 @@
         }
 
         function formatDate(dateString) {
-            const date = new Date(dateString);
-            const day = date.getDate();
-            const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
-            const year = date.getFullYear();
-            return `${day}, ${weekday}, ${year}`;
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return 'Invalid Date';
+                }
+                const day = date.getDate();
+                const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+                const year = date.getFullYear();
+                return `${day}, ${weekday}, ${year}`;
+            } catch (error) {
+                console.error('Error formatting date:', error);
+                return 'Invalid Date';
+            }
         }
 
         async function loadEstimates() {
@@ -1593,10 +1609,21 @@
             if (!tbody) return;
             
             try {
-                const response = await fetch('/api/estimates/list');
+                const response = await fetch('/api/estimates/list', {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    sessionStorage.clear();
+                    window.location.href = '/';
+                    return;
+                }
+                
                 const data = await response.json();
 
-                if (!data.success || data.data.length === 0) {
+                if (!data.success || !data.data || data.data.length === 0) {
                     tbody.innerHTML = `
                         <tr>
                             <td colspan="12" style="text-align: center; padding: 50px; color: #a0aec0;">
@@ -1611,6 +1638,7 @@
                 filterByStatus(currentFilter);
             } catch (error) {
                 console.error('Error loading estimates:', error);
+                showNotification('Error loading estimates', 'error');
             }
         }
 
@@ -1686,13 +1714,25 @@
         async function handleFormSubmit(e) {
             e.preventDefault();
 
+            // Basic validation
+            const date = document.getElementById('date').value;
+            const manager = document.getElementById('manager').value;
+            const resource = document.getElementById('resource').value;
+            const technician = document.getElementById('technician').value;
+            const client = document.getElementById('client').value;
+
+            if (!date || !manager || !resource || !technician || !client) {
+                showNotification('Please fill all required fields', 'warning');
+                return;
+            }
+
             const estimateData = {
-                date: document.getElementById('date').value,
-                manager: document.getElementById('manager').value,
-                resource: document.getElementById('resource').value,
-                technician: document.getElementById('technician').value,
-                client: document.getElementById('client').value,
-                comment: ''
+                date: date,
+                manager: manager,
+                resource: resource,
+                technician: technician,
+                client: client,
+                comment: pendingComment || ''
             };
 
             try {
@@ -1702,15 +1742,27 @@
                     estimateData.id = editingEstimateId;
                     response = await fetch('/api/estimates/update', {
                         method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                        },
                         body: JSON.stringify(estimateData)
                     });
                 } else {
                     response = await fetch('/api/estimates/add', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                        },
                         body: JSON.stringify(estimateData)
                     });
+                }
+
+                if (response.status === 401) {
+                    sessionStorage.clear();
+                    window.location.href = '/';
+                    return;
                 }
 
                 const data = await response.json();
@@ -1722,7 +1774,10 @@
                         try {
                             const commentResponse = await fetch('/api/comments/add', {
                                 method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
+                                headers: { 
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                                },
                                 body: JSON.stringify({
                                     estimate_id: newEstimateId,
                                     comment_text: pendingComment
