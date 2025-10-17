@@ -612,12 +612,20 @@
                 <p class="modal-subtitle">Enter your password to access the system</p>
             </div>
             <div class="input-group">
-                <label for="password">Password</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔐</span>
-                    <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
-                </div>
-            </div>
+    <label for="username">Username</label>
+    <div class="input-wrapper">
+        <span class="input-icon">👤</span>
+        <input type="text" id="username" placeholder="Enter username" autocomplete="username">
+    </div>
+</div>
+
+<div class="input-group">
+    <label for="password">Password</label>
+    <div class="input-wrapper">
+        <span class="input-icon">🔒</span>
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+    </div>
+</div>
             <div class="modal-buttons">
                 <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
                 <button class="modal-btn submit-btn" id="loginBtn" onclick="handleLogin()">
@@ -666,46 +674,50 @@
             }, 3000);
         }
 
-        async function handleLogin() {
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            
-            if (!password) {
-                showNotification();
-                return;
-            }
+       async function handleLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    if (!username || !password) {
+        showNotification();
+        return;
+    }
 
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span>Checking...</span>';
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<span>Checking...</span>';
 
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ password: password })
-                });
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                username: username,
+                password: password 
+            })
+        });
 
-                const data = await response.json();
+        const data = await response.json();
 
-                if (data.success) {
-                    sessionStorage.setItem('authToken', data.token);
-                    sessionStorage.setItem('userRole', data.role);
-                    window.location.href = data.redirect;
-                } else {
-                    showNotification();
-                    document.getElementById('password').value = '';
-                    document.getElementById('password').focus();
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showNotification();
-            } finally {
-                loginBtn.disabled = false;
-                loginBtn.innerHTML = '<span>Sign In</span>';
-            }
+        if (data.success) {
+            sessionStorage.setItem('authToken', data.token);
+            sessionStorage.setItem('userRole', data.role);
+            window.location.href = data.redirect;
+        } else {
+            showNotification();
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('username').focus();
         }
+    } catch (error) {
+        console.error('Login error:', error);
+        showNotification();
+    } finally {
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<span>Sign In</span>';
+    }
+}
 
         document.getElementById('password').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
