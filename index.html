@@ -55,7 +55,6 @@
             transform: translateY(-2px);
         }
 
-        /* Logo Animation */
         .logo-svg {
             width: 100%;
             height: 100%;
@@ -89,51 +88,27 @@
         }
 
         @keyframes slideTop {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            16.67% {
-                transform: translate(-5px, -5px);
-            }
-            33.33% {
-                transform: translate(0, 0);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            16.67% { transform: translate(-5px, -5px); }
+            33.33% { transform: translate(0, 0); }
         }
 
         @keyframes slideRight {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            16.67% {
-                transform: translate(5px, -5px);
-            }
-            33.33% {
-                transform: translate(0, 0);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            16.67% { transform: translate(5px, -5px); }
+            33.33% { transform: translate(0, 0); }
         }
 
         @keyframes slideBottom {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            16.67% {
-                transform: translate(5px, 5px);
-            }
-            33.33% {
-                transform: translate(0, 0);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            16.67% { transform: translate(5px, 5px); }
+            33.33% { transform: translate(0, 0); }
         }
 
         @keyframes slideLeft {
-            0%, 100% {
-                transform: translate(0, 0);
-            }
-            16.67% {
-                transform: translate(-5px, 5px);
-            }
-            33.33% {
-                transform: translate(0, 0);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            16.67% { transform: translate(-5px, 5px); }
+            33.33% { transform: translate(0, 0); }
         }
 
         .system-title {
@@ -143,7 +118,6 @@
             letter-spacing: -0.2px;
         }
 
-        /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
@@ -194,12 +168,8 @@
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .login-header h1 {
@@ -262,7 +232,6 @@
             z-index: 1;
         }
 
-        /* Footer */
         .footer {
             background: #ffffff;
             padding: 20px;
@@ -272,7 +241,6 @@
             border-top: 1px solid #e8ecf1;
         }
 
-        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -341,7 +309,7 @@
         }
 
         .input-group {
-            margin-bottom: 32px;
+            margin-bottom: 25px;
         }
 
         .input-group label {
@@ -458,7 +426,6 @@
             z-index: 1;
         }
 
-        /* Notification */
         .notification {
             position: fixed;
             top: -100px;
@@ -499,7 +466,6 @@
             color: #e53e3e;
         }
 
-        /* Decorative elements */
         .decorative-circle {
             position: fixed;
             border-radius: 50%;
@@ -523,7 +489,6 @@
             left: -100px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .login-container {
                 padding: 45px 35px;
@@ -569,13 +534,9 @@
         <div class="header-content">
             <div class="logo-1c">
                 <svg class="logo-svg" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Top bar (blue) -->
                     <rect class="logo-bar logo-bar-top" x="15" y="5" width="30" height="12" fill="#9b9ff5" rx="2" transform="rotate(-45 30 30)"/>
-                    <!-- Right bar (orange) -->
                     <rect class="logo-bar logo-bar-right" x="43" y="15" width="12" height="30" fill="#f4c542" rx="2" transform="rotate(-45 30 30)"/>
-                    <!-- Bottom bar (red) -->
                     <rect class="logo-bar logo-bar-bottom" x="15" y="43" width="30" height="12" fill="#ff7b7b" rx="2" transform="rotate(-45 30 30)"/>
-                    <!-- Left bar (green) -->
                     <rect class="logo-bar logo-bar-left" x="5" y="15" width="12" height="30" fill="#00e676" rx="2" transform="rotate(-45 30 30)"/>
                 </svg>
             </div>
@@ -609,23 +570,22 @@
         <div class="modal">
             <div class="modal-header">
                 <h2>User Authentication</h2>
-                <p class="modal-subtitle">Enter your password to access the system</p>
+                <p class="modal-subtitle">Enter your credentials to access the system</p>
             </div>
             <div class="input-group">
-    <label for="username">Username</label>
-    <div class="input-wrapper">
-        <span class="input-icon">👤</span>
-        <input type="text" id="username" placeholder="Enter username" autocomplete="username">
-    </div>
-</div>
-
-<div class="input-group">
-    <label for="password">Password</label>
-    <div class="input-wrapper">
-        <span class="input-icon">🔒</span>
-        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
-    </div>
-</div>
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="username" placeholder="Enter username" autocomplete="username">
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+                </div>
+            </div>
             <div class="modal-buttons">
                 <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
                 <button class="modal-btn submit-btn" id="loginBtn" onclick="handleLogin()">
@@ -639,6 +599,7 @@
         function openModal() {
             const modal = document.getElementById('modalOverlay');
             modal.style.display = 'flex';
+            document.getElementById('username').value = '';
             document.getElementById('password').value = '';
             
             requestAnimationFrame(() => {
@@ -647,7 +608,7 @@
                 });
             });
             
-            setTimeout(() => document.getElementById('password').focus(), 450);
+            setTimeout(() => document.getElementById('username').focus(), 450);
         }
 
         function closeModal() {
@@ -674,50 +635,57 @@
             }, 3000);
         }
 
-       async function handleLogin() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    if (!username || !password) {
-        showNotification();
-        return;
-    }
+        async function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            if (!username || !password) {
+                showNotification();
+                return;
+            }
 
-    loginBtn.disabled = true;
-    loginBtn.innerHTML = '<span>Checking...</span>';
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span>Checking...</span>';
 
-    try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                username: username,
-                password: password 
-            })
-        });
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        username: username,
+                        password: password 
+                    })
+                });
 
-        const data = await response.json();
+                const data = await response.json();
 
-        if (data.success) {
-            sessionStorage.setItem('authToken', data.token);
-            sessionStorage.setItem('userRole', data.role);
-            window.location.href = data.redirect;
-        } else {
-            showNotification();
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('username').focus();
+                if (data.success) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userRole', data.role);
+                    window.location.href = data.redirect;
+                } else {
+                    showNotification();
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    document.getElementById('username').focus();
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showNotification();
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<span>Sign In</span>';
+            }
         }
-    } catch (error) {
-        console.error('Login error:', error);
-        showNotification();
-    } finally {
-        loginBtn.disabled = false;
-        loginBtn.innerHTML = '<span>Sign In</span>';
-    }
-}
+
+        document.getElementById('username').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
 
         document.getElementById('password').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
