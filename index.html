@@ -552,7 +552,7 @@
     <div class="main-content">
         <div class="login-container">
             <div class="login-header">
-                <div class="login-icon">🔐</div>
+                <div class="login-icon">🔓</div>
                 <h1>Authorization</h1>
                 <p>Enterprise Portal Access</p>
             </div>
@@ -663,8 +663,22 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    localStorage.setItem('authToken', data.token);
-                    localStorage.setItem('userRole', data.role);
+                    // Сохраняем данные в sessionStorage
+                    sessionStorage.setItem('authToken', data.token);
+                    sessionStorage.setItem('userRole', data.role);
+                    sessionStorage.setItem('userName', data.user.username);
+                    sessionStorage.setItem('userId', data.user.id);
+                    
+                    console.log('Auth saved:', {
+                        token: sessionStorage.getItem('authToken'),
+                        role: sessionStorage.getItem('userRole')
+                    });
+                    
+                    // Закрываем модалку
+                    closeModal();
+                    
+                    // Редирект
+                    console.log('Redirecting to:', data.redirect);
                     window.location.href = data.redirect;
                 } else {
                     showNotification();
@@ -692,6 +706,16 @@
                 handleLogin();
             }
         });
+
+        // Проверяем, может уже залогинен
+        if (sessionStorage.getItem('authToken')) {
+            const role = sessionStorage.getItem('userRole');
+            if (role === 'superadmin') {
+                window.location.href = '/dashboard.html';
+            } else {
+                window.location.href = '/estimates.html';
+            }
+        }
     </script>
 </body>
 </html>
