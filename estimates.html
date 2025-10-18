@@ -1677,23 +1677,23 @@
             }
 
             tbody.innerHTML = filteredData.map(est => {
-                let displayStatus = est.status === 'search' ? 'sold' : est.status;
-                const statusClass = `status-${displayStatus.replace(/_/g, '-')}`;
-                return `
-                <tr class="${statusClass}" onclick="openEditModal(${est.id})">
-                    <td>${formatDate(est.date)}</td>
-                    <td>${est.manager}</td>
-                    <td>${est.resource}</td>
-                    <td>${est.technician}</td>
-                    <td>${est.client}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><button class="action-btn" onclick="event.stopPropagation(); openViewModal(${est.id})">View</button></td>
-                    <td>${getStatusLabel(est.status)}</td>
-                </tr>
+    let displayStatus = est.status === 'search' ? 'sold' : est.status;
+    const statusClass = `status-${displayStatus.replace(/_/g, '-')}`;
+    return `
+    <tr class="${statusClass}" onclick="openEditModal(${est.id})">
+        <td>${formatDate(est.date)}</td>
+        <td>${est.manager}</td>
+        <td>${est.resource}</td>
+        <td>${est.technician}</td>
+        <td>${est.client}</td>
+        <td>$${parseFloat(est.work || 0).toFixed(2)}</td>
+        <td>$${parseFloat(est.parts || 0).toFixed(2)}</td>
+        <td>$${parseFloat(est.second_tech || 0).toFixed(2)}</td>
+        <td>$${parseFloat(est.total || 0).toFixed(2)}</td>
+        <td>${est.part_number || '-'}</td>
+        <td><button class="action-btn" onclick="event.stopPropagation(); openViewModal(${est.id})">View</button></td>
+        <td>${getStatusLabel(est.status)}</td>
+    </tr>
             `;
             }).join('');
         }
