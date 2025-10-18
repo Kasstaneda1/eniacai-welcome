@@ -604,6 +604,65 @@
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
+        /* Стили для readonly полей */
+        .readonly-field {
+            background-color: #f7fafc !important;
+            color: #718096 !important;
+            cursor: not-allowed;
+        }
+
+        /* Стили для таблицы */
+        .table-container {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e8ecf1;
+            margin-top: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-wrapper thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .table-wrapper th {
+            color: #ffffff;
+            padding: 16px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+        }
+
+        .table-wrapper tbody tr {
+            border-bottom: 1px solid #e8ecf1;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .table-wrapper tbody tr:hover {
+            background: #f7fafc;
+            transform: scale(1.01);
+        }
+
+        .table-wrapper td {
+            padding: 14px;
+            color: #2d3748;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
         @media (max-width: 968px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; }
@@ -704,40 +763,41 @@
                     <!-- User cards will be loaded here -->
                 </div>
             </div>
+
+            <!-- Estimates Page -->
+            <div id="estimatesPage" style="display: none; width: 100%;">
+                <div class="staff-header">
+                    <h1 class="page-title">Estimates Management</h1>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Manager</th>
+                                    <th>Resource</th>
+                                    <th>Technician</th>
+                                    <th>Client</th>
+                                    <th>Work</th>
+                                    <th>Parts</th>
+                                    <th>2nd Tech</th>
+                                    <th>Total</th>
+                                    <th>Part Number</th>
+                                    <th>Events</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="estimatesTableDashboard">
+                                <!-- Заявки загружаются здесь -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Estimates Page -->
-<div id="estimatesPage" style="display: none; width: 100%;">
-    <div class="staff-header">
-        <h1 class="page-title">Estimates Management</h1>
-    </div>
-    
-    <div class="table-container" style="margin-top: 20px;">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Manager</th>
-                        <th>Resource</th>
-                        <th>Technician</th>
-                        <th>Client</th>
-                        <th>Work</th>
-                        <th>Parts</th>
-                        <th>2nd Tech</th>
-                        <th>Total</th>
-                        <th>Part Number</th>
-                        <th>Events</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="estimatesTableDashboard">
-                    <!-- Заполняется JavaScript -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
     <!-- Add/Edit User Modal -->
     <div class="modal-overlay" id="userModal">
@@ -750,73 +810,6 @@
                     <label for="username">Username *</label>
                     <input type="text" id="username" required placeholder="e.g., john.smith">
                 </div>
-                <!-- Admin Edit Modal -->
-<div class="modal-overlay" id="adminEditModal">
-    <div class="modal">
-        <h2>Edit Estimate (Admin)</h2>
-        <form id="adminEditForm" onsubmit="handleAdminSave(event)">
-            <input type="hidden" id="adminEditId">
-            
-            <div class="form-group">
-                <label>Date</label>
-                <input type="text" id="adminDate" readonly style="background: #f7fafc; cursor: not-allowed;">
-            </div>
-
-            <div class="form-group">
-                <label>Manager</label>
-                <input type="text" id="adminManager" readonly style="background: #f7fafc; cursor: not-allowed;">
-            </div>
-
-            <div class="form-group">
-                <label>Resource</label>
-                <input type="text" id="adminResource" readonly style="background: #f7fafc; cursor: not-allowed;">
-            </div>
-
-            <div class="form-group">
-                <label>Technician</label>
-                <input type="text" id="adminTechnician" readonly style="background: #f7fafc; cursor: not-allowed;">
-            </div>
-
-            <div class="form-group">
-                <label>Client</label>
-                <input type="text" id="adminClient" readonly style="background: #f7fafc; cursor: not-allowed;">
-            </div>
-
-            <hr style="margin: 20px 0; border: 1px solid #e8ecf1;">
-
-            <div class="form-group">
-                <label for="adminWork">Work ($)</label>
-                <input type="number" step="0.01" id="adminWork" placeholder="0.00" onchange="calculateTotal()">
-            </div>
-
-            <div class="form-group">
-                <label for="adminParts">Parts ($)</label>
-                <input type="number" step="0.01" id="adminParts" placeholder="0.00" onchange="calculateTotal()">
-            </div>
-
-            <div class="form-group">
-                <label for="adminSecondTech">2nd Tech ($)</label>
-                <input type="number" step="0.01" id="adminSecondTech" placeholder="0.00" onchange="calculateTotal()">
-            </div>
-
-            <div class="form-group">
-                <label for="adminTotal">Total ($)</label>
-                <input type="number" step="0.01" id="adminTotal" placeholder="Auto-calculated">
-                <small style="color: #718096; font-size: 0.85em;">Leave empty for auto-calculation</small>
-            </div>
-
-            <div class="form-group">
-                <label for="adminPartNumber">Part Number</label>
-                <input type="text" id="adminPartNumber" placeholder="Enter part number">
-            </div>
-
-            <div class="modal-buttons">
-                <button type="button" class="modal-btn cancel-btn" onclick="closeAdminEditModal()">Cancel</button>
-                <button type="submit" class="modal-btn save-btn">Save</button>
-            </div>
-        </form>
-    </div>
-</div>
 
                 <div class="form-group">
                     <label for="fullName">Full Name *</label>
@@ -846,6 +839,76 @@
         </div>
     </div>
 
+    <!-- Admin Edit Modal -->
+    <div class="modal-overlay" id="adminEditModal">
+        <div class="modal">
+            <h2>Edit Estimate (Admin)</h2>
+            <form id="adminEditForm" onsubmit="handleAdminSave(event)">
+                <input type="hidden" id="adminEditId">
+                
+                <!-- Read-only поля (серый фон) -->
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="adminDate" readonly class="readonly-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Manager</label>
+                    <input type="text" id="adminManager" readonly class="readonly-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Resource</label>
+                    <input type="text" id="adminResource" readonly class="readonly-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Technician</label>
+                    <input type="text" id="adminTechnician" readonly class="readonly-field">
+                </div>
+
+                <div class="form-group">
+                    <label>Client</label>
+                    <input type="text" id="adminClient" readonly class="readonly-field">
+                </div>
+
+                <hr style="margin: 20px 0; border: 1px solid #e8ecf1;">
+
+                <!-- Редактируемые поля для superadmin -->
+                <div class="form-group">
+                    <label for="adminWork">Work ($)</label>
+                    <input type="number" step="0.01" id="adminWork" placeholder="0.00" onchange="calculateTotal()">
+                </div>
+
+                <div class="form-group">
+                    <label for="adminParts">Parts ($)</label>
+                    <input type="number" step="0.01" id="adminParts" placeholder="0.00" onchange="calculateTotal()">
+                </div>
+
+                <div class="form-group">
+                    <label for="adminSecondTech">2nd Tech ($)</label>
+                    <input type="number" step="0.01" id="adminSecondTech" placeholder="0.00" onchange="calculateTotal()">
+                </div>
+
+                <div class="form-group">
+                    <label for="adminTotal">Total ($)</label>
+                    <input type="number" step="0.01" id="adminTotal" placeholder="Auto-calculated">
+                    <small style="color: #718096; font-size: 0.85em;">Leave empty for auto-calculation or enter manually</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPartNumber">Part Number</label>
+                    <input type="text" id="adminPartNumber" placeholder="Enter part number">
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn cancel-btn" onclick="closeAdminEditModal()">Cancel</button>
+                    <button type="submit" class="modal-btn save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Check authentication
         if (!sessionStorage.getItem('authToken')) {
@@ -863,32 +926,32 @@
 
         // Page navigation
         function showPage(page) {
-    document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-    event.target.closest('.menu-item').classList.add('active');
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.menu-item').classList.add('active');
 
-    const homePage = document.getElementById('homePage');
-    const staffPage = document.getElementById('staffPage');
-    const estimatesPage = document.getElementById('estimatesPage');
+            const homePage = document.getElementById('homePage');
+            const staffPage = document.getElementById('staffPage');
+            const estimatesPage = document.getElementById('estimatesPage');
 
-    // Скрываем все
-    if (homePage) homePage.style.display = 'none';
-    if (staffPage) staffPage.style.display = 'none';
-    if (estimatesPage) estimatesPage.style.display = 'none';
+            // Скрываем все страницы
+            if (homePage) homePage.style.display = 'none';
+            if (staffPage) staffPage.style.display = 'none';
+            if (estimatesPage) estimatesPage.style.display = 'none';
 
-    // Показываем нужную
-    if (page === 'home') {
-        homePage.style.display = 'block';
-        document.getElementById('breadcrumb').textContent = 'Dashboard → Home';
-    } else if (page === 'staff') {
-        staffPage.style.display = 'block';
-        document.getElementById('breadcrumb').textContent = 'Dashboard → Staff Management';
-        loadUsers();
-    } else if (page === 'estimates') {
-        estimatesPage.style.display = 'block';
-        document.getElementById('breadcrumb').textContent = 'Dashboard → Estimates';
-        loadEstimatesDashboard();
-    }
-}
+            // Показываем нужную
+            if (page === 'home') {
+                homePage.style.display = 'block';
+                document.getElementById('breadcrumb').textContent = 'Dashboard → Home';
+            } else if (page === 'staff') {
+                staffPage.style.display = 'block';
+                document.getElementById('breadcrumb').textContent = 'Dashboard → Staff Management';
+                loadUsers();
+            } else if (page === 'estimates') {
+                estimatesPage.style.display = 'block';
+                document.getElementById('breadcrumb').textContent = 'Dashboard → Estimates';
+                loadEstimatesDashboard();
+            }
+        }
 
         // Load users
         async function loadUsers() {
@@ -944,7 +1007,7 @@
                         <div class="user-card-actions">
                             <button class="action-btn-small edit-btn" onclick="editUser(${user.id})">Edit</button>
                             ${!isSelf ? `
-                                <button class="action-btn-small delete-btn" onclick="deleteUser(${user.id}, '${user.username}', ${isSelf})">Delete</button>
+                                <button class="action-btn-small delete-btn" onclick="deleteUser(${user.id})">Delete</button>
                             ` : ''}
                         </div>
                     </div>
@@ -952,7 +1015,7 @@
             }).join('');
         }
 
-        // Modal functions
+        // Open add user modal
         function openAddUserModal() {
             document.getElementById('modalTitle').textContent = 'Add New User';
             document.getElementById('userForm').reset();
@@ -960,38 +1023,39 @@
             document.getElementById('userModal').style.display = 'flex';
         }
 
+        // Close user modal
         function closeUserModal() {
             document.getElementById('userModal').style.display = 'none';
         }
 
+        // Edit user
         async function editUser(userId) {
             try {
-                const response = await fetch(`/api/users/get?id=${userId}`, {
+                const response = await fetch('/api/users/list', {
                     headers: {
                         'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
                     }
                 });
 
                 const data = await response.json();
+                const user = data.data.find(u => u.id === userId);
 
-                if (data.success) {
-                    const user = data.data;
-                    document.getElementById('modalTitle').textContent = 'Edit User';
-                    document.getElementById('editUserId').value = user.id;
-                    document.getElementById('username').value = user.username;
-                    document.getElementById('fullName').value = user.full_name;
-                    document.getElementById('password').value = '';
-                    document.getElementById('password').required = false;
-                    document.getElementById('password').placeholder = 'Leave empty to keep current password';
-                    document.getElementById('role').value = user.role_name;
-                    document.getElementById('userModal').style.display = 'flex';
-                }
+                if (!user) return;
+
+                document.getElementById('modalTitle').textContent = 'Edit User';
+                document.getElementById('editUserId').value = user.id;
+                document.getElementById('username').value = user.username;
+                document.getElementById('fullName').value = user.full_name;
+                document.getElementById('password').required = false;
+                document.getElementById('role').value = user.role_name;
+
+                document.getElementById('userModal').style.display = 'flex';
             } catch (error) {
                 console.error('Error loading user:', error);
-                alert('Failed to load user data');
             }
         }
 
+        // Handle user form submission
         async function handleUserSubmit(event) {
             event.preventDefault();
 
@@ -1001,43 +1065,29 @@
             const password = document.getElementById('password').value;
             const role = document.getElementById('role').value;
 
-            const isEdit = !!userId;
-            const endpoint = isEdit ? '/api/users/update' : '/api/users/create';
-            const method = isEdit ? 'PUT' : 'POST';
-
-            const payload = {
-                username,
-                full_name: fullName,
-                role_name: role
-            };
-
-            if (isEdit) {
-                payload.id = parseInt(userId);
-                if (password) {
-                    payload.password = password;
-                }
-            } else {
-                if (!password) {
-                    alert('Password is required for new users');
-                    return;
-                }
-                payload.password = password;
-            }
+            const url = userId ? '/api/users/update' : '/api/users/create';
+            const method = userId ? 'PUT' : 'POST';
 
             try {
-                const response = await fetch(endpoint, {
+                const response = await fetch(url, {
                     method: method,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        id: userId ? parseInt(userId) : undefined,
+                        username,
+                        full_name: fullName,
+                        password: password || undefined,
+                        role_name: role
+                    })
                 });
 
                 const data = await response.json();
 
                 if (data.success) {
-                    alert(isEdit ? 'User updated successfully!' : 'User created successfully!');
+                    alert(userId ? 'User updated successfully!' : 'User created successfully!');
                     closeUserModal();
                     loadUsers();
                 } else {
@@ -1049,22 +1099,22 @@
             }
         }
 
-        async function deleteUser(userId, username, isSelf) {
-            if (isSelf) {
-                alert('You cannot delete yourself!');
-                return;
-            }
-
-            if (!confirm(`Are you sure you want to delete user "${username}"?`)) {
+        // Delete user
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user?')) {
                 return;
             }
 
             try {
-                const response = await fetch(`/api/users/delete?id=${userId}`, {
+                const response = await fetch('/api/users/delete', {
                     method: 'DELETE',
                     headers: {
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
-                    }
+                    },
+                    body: JSON.stringify({
+                        id: parseInt(userId)
+                    })
                 });
 
                 const data = await response.json();
@@ -1081,158 +1131,172 @@
             }
         }
 
+        // Logout
         function logout() {
             sessionStorage.clear();
             window.location.href = '/';
         }
 
-        // ============ ФУНКЦИИ ДЛЯ ESTIMATES ============
+        // Загрузка заявок для dashboard
+        async function loadEstimatesDashboard() {
+            try {
+                const response = await fetch('/api/estimates/list', {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    }
+                });
 
-async function loadEstimatesDashboard() {
-    try {
-        const response = await fetch('/api/estimates/list', {
-            headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` }
-        });
+                const data = await response.json();
 
-        const data = await response.json();
-        if (data.success) {
-            displayEstimatesDashboard(data.data);
+                if (data.success) {
+                    displayEstimatesDashboard(data.data);
+                } else {
+                    console.error('Failed to load estimates');
+                }
+            } catch (error) {
+                console.error('Error loading estimates:', error);
+            }
         }
-    } catch (error) {
-        console.error('Error loading estimates:', error);
-    }
-}
 
-function displayEstimatesDashboard(estimates) {
-    const tbody = document.getElementById('estimatesTableDashboard');
-    
-    if (estimates.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 50px; color: #718096;">No estimates yet</td></tr>';
-        return;
-    }
+        // Отображение заявок
+        function displayEstimatesDashboard(estimates) {
+            const tbody = document.getElementById('estimatesTableDashboard');
+            
+            if (estimates.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="12" style="text-align: center; color: #718096; padding: 50px;">No estimates yet</td></tr>';
+                return;
+            }
 
-    tbody.innerHTML = estimates.map(est => {
-        return `
-            <tr onclick="openAdminEditModal(${est.id})" style="cursor: pointer;">
-                <td>${formatDateSimple(est.date)}</td>
-                <td>${est.manager}</td>
-                <td>${est.resource}</td>
-                <td>${est.technician}</td>
-                <td>${est.client}</td>
-                <td>$${parseFloat(est.work || 0).toFixed(2)}</td>
-                <td>$${parseFloat(est.parts || 0).toFixed(2)}</td>
-                <td>$${parseFloat(est.second_tech || 0).toFixed(2)}</td>
-                <td>$${parseFloat(est.total || 0).toFixed(2)}</td>
-                <td>${est.part_number || '-'}</td>
-                <td><button class="action-btn-small edit-btn" onclick="event.stopPropagation();">View</button></td>
-                <td>${est.status}</td>
-            </tr>
-        `;
-    }).join('');
-}
-
-let currentEstimateData = [];
-
-async function openAdminEditModal(estimateId) {
-    try {
-        const response = await fetch('/api/estimates/list', {
-            headers: { 'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` }
-        });
-
-        const data = await response.json();
-        currentEstimateData = data.data;
-        const estimate = data.data.find(e => e.id === estimateId);
-
-        if (!estimate) return;
-
-        document.getElementById('adminEditId').value = estimate.id;
-        document.getElementById('adminDate').value = formatDateSimple(estimate.date);
-        document.getElementById('adminManager').value = estimate.manager;
-        document.getElementById('adminResource').value = estimate.resource;
-        document.getElementById('adminTechnician').value = estimate.technician;
-        document.getElementById('adminClient').value = estimate.client;
-        
-        document.getElementById('adminWork').value = estimate.work || '';
-        document.getElementById('adminParts').value = estimate.parts || '';
-        document.getElementById('adminSecondTech').value = estimate.second_tech || '';
-        document.getElementById('adminTotal').value = estimate.total || '';
-        document.getElementById('adminPartNumber').value = estimate.part_number || '';
-
-        document.getElementById('adminEditModal').style.display = 'flex';
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to load estimate');
-    }
-}
-
-function closeAdminEditModal() {
-    document.getElementById('adminEditModal').style.display = 'none';
-}
-
-function calculateTotal() {
-    const work = parseFloat(document.getElementById('adminWork').value) || 0;
-    const parts = parseFloat(document.getElementById('adminParts').value) || 0;
-    const secondTech = parseFloat(document.getElementById('adminSecondTech').value) || 0;
-    
-    const totalField = document.getElementById('adminTotal');
-    if (totalField.value === '') {
-        totalField.value = (work + parts + secondTech).toFixed(2);
-    }
-}
-
-async function handleAdminSave(event) {
-    event.preventDefault();
-
-    const id = document.getElementById('adminEditId').value;
-    const work = document.getElementById('adminWork').value;
-    const parts = document.getElementById('adminParts').value;
-    const secondTech = document.getElementById('adminSecondTech').value;
-    const total = document.getElementById('adminTotal').value;
-    const partNumber = document.getElementById('adminPartNumber').value;
-
-    try {
-        const response = await fetch('/api/estimates/update-admin', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
-            },
-            body: JSON.stringify({
-                id: parseInt(id),
-                work,
-                parts,
-                second_tech: secondTech,
-                total,
-                part_number: partNumber
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            alert('Estimate updated successfully!');
-            closeAdminEditModal();
-            loadEstimatesDashboard();
-        } else {
-            alert(data.error || 'Failed to update');
+            tbody.innerHTML = estimates.map(est => {
+                const statusClass = `status-${est.status.replace(/_/g, '-')}`;
+                return `
+                    <tr class="${statusClass}" onclick="openAdminEditModal(${est.id})">
+                        <td>${formatDate(est.date)}</td>
+                        <td>${est.manager}</td>
+                        <td>${est.resource}</td>
+                        <td>${est.technician}</td>
+                        <td>${est.client}</td>
+                        <td>$${parseFloat(est.work || 0).toFixed(2)}</td>
+                        <td>$${parseFloat(est.parts || 0).toFixed(2)}</td>
+                        <td>$${parseFloat(est.second_tech || 0).toFixed(2)}</td>
+                        <td>$${parseFloat(est.total || 0).toFixed(2)}</td>
+                        <td>${est.part_number || '-'}</td>
+                        <td><button class="action-btn" onclick="event.stopPropagation(); alert('View Events - TODO')">View</button></td>
+                        <td>${est.status}</td>
+                    </tr>
+                `;
+            }).join('');
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to save');
-    }
-}
 
-function formatDateSimple(dateString) {
-    try {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        return `${month}/${day}/${year}`;
-    } catch (error) {
-        return 'Invalid Date';
-    }
-}
+        // Открыть модалку редактирования для superadmin
+        async function openAdminEditModal(estimateId) {
+            try {
+                const response = await fetch('/api/estimates/list', {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    }
+                });
+
+                const data = await response.json();
+                const estimate = data.data.find(e => e.id === estimateId);
+
+                if (!estimate) return;
+
+                // Заполняем форму
+                document.getElementById('adminEditId').value = estimate.id;
+                document.getElementById('adminDate').value = formatDate(estimate.date);
+                document.getElementById('adminManager').value = estimate.manager;
+                document.getElementById('adminResource').value = estimate.resource;
+                document.getElementById('adminTechnician').value = estimate.technician;
+                document.getElementById('adminClient').value = estimate.client;
+                
+                document.getElementById('adminWork').value = estimate.work || '';
+                document.getElementById('adminParts').value = estimate.parts || '';
+                document.getElementById('adminSecondTech').value = estimate.second_tech || '';
+                document.getElementById('adminTotal').value = estimate.total || '';
+                document.getElementById('adminPartNumber').value = estimate.part_number || '';
+
+                document.getElementById('adminEditModal').style.display = 'flex';
+            } catch (error) {
+                console.error('Error loading estimate:', error);
+                alert('Failed to load estimate data');
+            }
+        }
+
+        // Закрыть модалку
+        function closeAdminEditModal() {
+            document.getElementById('adminEditModal').style.display = 'none';
+        }
+
+        // Автоматический расчёт Total
+        function calculateTotal() {
+            const work = parseFloat(document.getElementById('adminWork').value) || 0;
+            const parts = parseFloat(document.getElementById('adminParts').value) || 0;
+            const secondTech = parseFloat(document.getElementById('adminSecondTech').value) || 0;
+            
+            // Если поле Total пустое - заполняем автоматически
+            const totalField = document.getElementById('adminTotal');
+            if (totalField.value === '') {
+                totalField.value = (work + parts + secondTech).toFixed(2);
+            }
+        }
+
+        // Сохранить изменения
+        async function handleAdminSave(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('adminEditId').value;
+            const work = document.getElementById('adminWork').value;
+            const parts = document.getElementById('adminParts').value;
+            const secondTech = document.getElementById('adminSecondTech').value;
+            const total = document.getElementById('adminTotal').value;
+            const partNumber = document.getElementById('adminPartNumber').value;
+
+            try {
+                const response = await fetch('/api/estimates/update-admin', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+                    },
+                    body: JSON.stringify({
+                        id: parseInt(id),
+                        work,
+                        parts,
+                        second_tech: secondTech,
+                        total,
+                        part_number: partNumber
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Estimate updated successfully!');
+                    closeAdminEditModal();
+                    loadEstimatesDashboard();
+                } else {
+                    alert(data.error || 'Failed to update estimate');
+                }
+            } catch (error) {
+                console.error('Error saving estimate:', error);
+                alert('Failed to save estimate. Please try again.');
+            }
+        }
+
+        // Форматирование даты
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return 'Invalid Date';
+                const day = date.getDate();
+                const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+                const year = date.getFullYear();
+                return `${day}, ${weekday}, ${year}`;
+            } catch (error) {
+                return 'Invalid Date';
+            }
+        }
     </script>
 </body>
 </html>
